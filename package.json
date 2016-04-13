@@ -1,0 +1,30 @@
+{
+  "name": "arbitrary-emitter",
+  "version": "0.0.1",
+  "description": "Event emitter with Map/Set sugar",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/jacoborus/arbitrary-emitter.git"
+  },
+  "keywords": [
+    "Event",
+    "emitter",
+    "map",
+    "set",
+    "emitter"
+  ],
+  "author": "Jacobo Tabernero",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jacoborus/arbitrary-emitter/issues"
+  },
+  "homepage": "https://github.com/jacoborus/arbitrary-emitter",
+  "devDependencies": {
+    "eslint": "^2.7.0",
+    "tape": "^4.5.1"
+  }
+}
