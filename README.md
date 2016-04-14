@@ -18,6 +18,7 @@ const emitter = arbitraryEmitter()
 ## Emitter API
 
 - [emitter.add](#emitter-add-api)
+- [emitter.addOnce](#emitter-addonce-api)
 - [emitter.trigger](#emitter-trigger-api)
 - [Testing](#testing)
 
@@ -26,12 +27,32 @@ const emitter = arbitraryEmitter()
 <a name="emitter-add-api"></a>
 ### add(key, method)
 
-Create a listener for `key` which will trigger `method` function.
+Add a listener for `key` which will trigger `method` function. 
+`key` can be any type of value.
+
+`add` returns unsubscribe  method
+
+```js
+const obj = {}
+let unsubscribe = emitter.add(obj, () => doSomething())
+emitter.trigger(obj) // will `doSomething`
+unsubscribe()
+emitter.trigger(obj) // won't do anything
+```
+
+
+
+<a name="emitter-addonce-api"></a>
+### addOnce(key, method)
+
+Add a listener for `key` which will trigger `method` function just one time, then listener will be removed.
 `key` can be any type of value
 
 ```js
 const obj = {}
-emitter.add(obj, () => doSomething())
+emitter.addOnce(obj, () => doSomethingOnce())
+emitter.trigger(obj) // will `doSomething`
+emitter.trigger(obj) // won't do anything
 ```
 
 

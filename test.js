@@ -3,7 +3,7 @@
 const test = require('tape')
 const ae = require('./arbitrary-emitter.js')
 
-test('hello world', t => {
+test('add and trigger', t => {
   const emitter = ae()
   const obj = {}
   let control = 0
@@ -15,5 +15,17 @@ test('hello world', t => {
   unsubscribe()
   emitter.trigger(obj)
   t.is(control, 2, 'unsubscribe')
+  t.end()
+})
+
+test('add once', t => {
+  const emitter = ae()
+  const obj = {}
+  let control = 0
+  emitter.addOnce(obj, () => ++control)
+  emitter.trigger(obj)
+  t.is(control, 1, 'trigger once')
+  emitter.trigger(obj)
+  t.is(control, 1, 'automatic unsubscription')
   t.end()
 })
