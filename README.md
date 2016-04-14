@@ -20,6 +20,7 @@ const emitter = arbitraryEmitter()
 - [emitter.add](#emitter-add-api)
 - [emitter.addOnce](#emitter-addonce-api)
 - [emitter.trigger](#emitter-trigger-api)
+- [emitter.remove](#emitter-remove-api)
 - [Testing](#testing)
 
 
@@ -64,6 +65,17 @@ Trigger methods binded to `key`
 
 ```js
 emitter.trigger(obj)
+```
+
+
+
+<a name="emitter-remove-api"></a>
+## emitter.remove(key)
+
+Remove all listeners binded to `key`
+
+```js
+emitter.remove(obj)
 ```
 
 

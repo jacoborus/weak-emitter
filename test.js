@@ -29,3 +29,17 @@ test('add once', t => {
   t.is(control, 1, 'automatic unsubscription')
   t.end()
 })
+
+test('remove', t => {
+  const emitter = ae()
+  const obj = {}
+  let control = 0
+  emitter.add(obj, () => ++control)
+  emitter.add(obj, () => ++control)
+  emitter.trigger(obj)
+  t.is(control, 2, 'control')
+  emitter.remove(obj)
+  emitter.trigger(obj)
+  t.is(control, 2, 'remove link from subscriptions')
+  t.end()
+})

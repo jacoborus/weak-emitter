@@ -36,9 +36,13 @@ module.exports = function () {
 
   function trigger (key) {
     const link = links.get(key)
-    if (!key) return
+    if (!link) return
     link.forEach(fn => fn())
   }
 
-  return { add, addOnce, trigger }
+  function remove (key) {
+    links.delete(key)
+  }
+
+  return { add, addOnce, trigger, remove }
 }
