@@ -9,40 +9,40 @@ module.exports = function () {
     return link
   }
 
-  function add (key, method) {
-    const link = links.get(key) || createNewLink(key)
-    link.add(method)
-    let isSubscribed = true
-    return () => {
-      if (isSubscribed) {
-        link.delete(method)
-        isSubscribed = false
+  return {
+    add (key, method) {
+      const link = links.get(key) || createNewLink(key)
+      link.add(method)
+      let isSubscribed = true
+      return () => {
+        if (isSubscribed) {
+          link.delete(method)
+          isSubscribed = false
+        }
       }
+    },
+
+    addOnce (key, method) {
+      const link = links.get(key) || createNewLink(key)
+      const wrap = {}
+      const fn = () => {
+        method()
+        wrap.remove()
+      }
+      link.add(fn)
+      wrap.remove = () => {
+        link.delete(fn)
+      }
+    },
+
+    trigger (key) {
+      const link = links.get(key)
+      if (!link) return
+      link.forEach(fn => fn())
+    },
+
+    remove (key) {
+      links.delete(key)
     }
   }
-
-  function addOnce (key, method) {
-    const link = links.get(key) || createNewLink(key)
-    const wrap = {}
-    const fn = () => {
-      method()
-      wrap.remove()
-    }
-    link.add(fn)
-    wrap.remove = () => {
-      link.delete(fn)
-    }
-  }
-
-  function trigger (key) {
-    const link = links.get(key)
-    if (!link) return
-    link.forEach(fn => fn())
-  }
-
-  function remove (key) {
-    links.delete(key)
-  }
-
-  return { add, addOnce, trigger, remove }
 }
