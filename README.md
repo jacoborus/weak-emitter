@@ -59,12 +59,13 @@ emitter.trigger(obj) // won't do anything
 
 
 <a name="emitter-trigger-api"></a>
-## emitter.trigger(key)
+## emitter.trigger(key[, ...args])
 
-Trigger methods binded to `key`
+Trigger methods binded to `key`, and pass the rest of arguments to it
 
 ```js
-emitter.trigger(obj)
+emitter.add('test', (a, b) => console.log(a + b))
+emitter.trigger('test', 1, 2) // => 3
 ```
 
 

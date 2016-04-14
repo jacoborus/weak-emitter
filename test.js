@@ -43,3 +43,24 @@ test('remove', t => {
   t.is(control, 2, 'remove link from subscriptions')
   t.end()
 })
+
+test('trigger with arguments', t => {
+  const emitter = ae()
+  const obj = {}
+  let control = ''
+  emitter.add(obj, () => {control = control + 'a'})
+  emitter.trigger(obj)
+  t.is(control, 'a', 'trigger')
+  emitter.trigger(obj)
+  t.is(control, 'aa', 'trigger')
+
+  emitter.add(obj, () => {control = control + 'b'})
+  emitter.trigger(obj)
+  t.is(control, 'aaab', 'unsubscribe')
+
+  emitter.add(obj, () => {control = control + 'c'})
+  emitter.trigger(obj)
+  t.is(control, 'aaababc', 'unsubscribe')
+
+  t.end()
+})

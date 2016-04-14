@@ -9,6 +9,8 @@ module.exports = function () {
     return link
   }
 
+  const apply = Function.prototype.apply
+
   return {
     add (key, method) {
       const link = links.get(key) || createNewLink(key)
@@ -26,7 +28,7 @@ module.exports = function () {
       const link = links.get(key) || createNewLink(key)
       const wrap = {}
       const fn = () => {
-        method()
+        method(arguments)
         wrap.remove()
       }
       link.add(fn)
@@ -38,7 +40,12 @@ module.exports = function () {
     trigger (key) {
       const link = links.get(key)
       if (!link) return
-      link.forEach(fn => fn())
+      if (arguments.length > 1) {
+        let args = arguments.slice(1)
+        link.forEach(fn => apply.call(fn, args))
+      } else {
+        link.forEach(fn => fn())
+      }
     },
 
     remove (key) {
