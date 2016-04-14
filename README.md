@@ -17,28 +17,28 @@ const emitter = arbitraryEmitter()
 
 ## Emitter API
 
-- [emitter.add](#emitter-add-api)
-- [emitter.addOnce](#emitter-addonce-api)
-- [emitter.trigger](#emitter-trigger-api)
-- [emitter.remove](#emitter-remove-api)
+- [emitter.on](#emitter-on-api)
+- [emitter.once](#emitter-once-api)
+- [emitter.emit](#emitter-emit-api)
+- [emitter.off](#emitter-off-api)
 - [Testing](#testing)
 
 
 
-<a name="emitter-add-api"></a>
-### add(key, method)
+<a name="emitter-on-api"></a>
+### on(key, method)
 
 Add a listener for `key` which will trigger `method` function. 
 `key` can be any type of value.
 
-`add` returns unsubscribe  method
+`on` returns unsubscribe  method
 
 ```js
 const obj = {}
-let unsubscribe = emitter.add(obj, () => doSomething())
-emitter.trigger(obj) // will `doSomething`
+let unsubscribe = emitter.on(obj, () => doSomething())
+emitter.emit(obj) // will `doSomething`
 unsubscribe()
-emitter.trigger(obj) // won't do anything
+emitter.emit(obj) // won't do anything
 ```
 
 
@@ -52,31 +52,31 @@ Add a listener for `key` which will trigger `method` function just one time, the
 ```js
 const obj = {}
 emitter.addOnce(obj, () => doSomethingOnce())
-emitter.trigger(obj) // will `doSomething`
-emitter.trigger(obj) // won't do anything
+emitter.emit(obj) // will `doSomething`
+emitter.emit(obj) // won't do anything
 ```
 
 
 
-<a name="emitter-trigger-api"></a>
-## emitter.trigger(key[, ...args])
+<a name="emitter-emit-api"></a>
+## emitter.emit(key[, ...args])
 
-Trigger methods binded to `key`, and pass the rest of arguments to it
+emit methods binded to `key`, and pass the rest of arguments to it
 
 ```js
-emitter.add('test', (a, b) => console.log(a + b))
-emitter.trigger('test', 1, 2) // => 3
+emitter.on('test', (a, b) => console.log(a + b))
+emitter.emit('test', 1, 2) // => 3
 ```
 
 
 
-<a name="emitter-remove-api"></a>
-## emitter.remove(key)
+<a name="emitter-off-api"></a>
+## emitter.off(key)
 
 Remove all listeners binded to `key`
 
 ```js
-emitter.remove(obj)
+emitter.off(obj)
 ```
 
 

@@ -12,7 +12,7 @@ module.exports = function () {
   const apply = Function.prototype.apply
 
   return {
-    add (key, method) {
+    on (key, method) {
       const link = links.get(key) || createNewLink(key)
       link.add(method)
       let isSubscribed = true
@@ -24,7 +24,7 @@ module.exports = function () {
       }
     },
 
-    addOnce (key, method) {
+    once (key, method) {
       const link = links.get(key) || createNewLink(key)
       const wrap = {}
       const fn = () => {
@@ -37,7 +37,7 @@ module.exports = function () {
       }
     },
 
-    trigger (key) {
+    emit (key) {
       const link = links.get(key)
       if (!link) return
       if (arguments.length > 1) {
@@ -48,7 +48,7 @@ module.exports = function () {
       }
     },
 
-    remove (key) {
+    off (key) {
       links.delete(key)
     }
   }
