@@ -3,6 +3,8 @@ arbitrary-emitter
 
 Event emitter with Map/Set sugar for browser and node.js apps
 
+[![Build Status](https://travis-ci.org/jacoborus/arbitrary-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/arbitrary-emitter)
+
 **arbitrary-emitter** allows to use arbitrary values as keys for your events
 
 **arbitrary-emitter** is written in vanilla ES6, so maybe you want to transpile it before using it.
@@ -21,32 +23,30 @@ const emitter = arbitraryEmitter()
 - [emitter.once](#emitter-once-api)
 - [emitter.emit](#emitter-emit-api)
 - [emitter.off](#emitter-off-api)
-- [Testing](#testing)
-
 
 
 <a name="emitter-on-api"></a>
-### on(key, method)
+### on(key, action)
 
-Add a listener for `key` which will trigger `method` function. 
+Add a listener with `key` which will trigger `action` function. 
 `key` can be any type of value.
 
 `on` returns unsubscribe  method
 
 ```js
 const obj = {}
-let unsubscribe = emitter.on(obj, () => doSomething())
+let removeListener = emitter.on(obj, () => doSomething())
 emitter.emit(obj) // will `doSomething`
-unsubscribe()
+removeListener()
 emitter.emit(obj) // won't do anything
 ```
 
 
 
 <a name="emitter-addonce-api"></a>
-### once(key, method)
+### once(key, action)
 
-Add a listener for `key` which will trigger `method` function just one time, then listener will be removed.
+Add a listener for `key` which will trigger `action` function just one time, then listener will be removed.
 `key` can be any type of value
 
 ```js
@@ -61,7 +61,7 @@ emitter.emit(obj) // won't do anything
 <a name="emitter-emit-api"></a>
 ## emitter.emit(key[, ...args])
 
-emit methods binded to `key`, and pass the rest of arguments to it
+`emit` methods binded to `key`, and pass the rest of the arguments to it
 
 ```js
 emitter.on('test', (a, b) => console.log(a + b))
@@ -91,8 +91,6 @@ emitter.off(key) // will remove the listener `key` and all actions binded to it
 npm test
 ```
 
-
-[![Build Status](https://travis-ci.org/jacoborus/arbitrary-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/arbitrary-emitter)
 
 <br><br>
 

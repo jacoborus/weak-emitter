@@ -29,8 +29,8 @@ module.exports = function () {
       link.add(fn)
       const rm = () => link.delete(fn)
       function fn () {
-        method(arguments)
         rm()
+        method(arguments)
       }
     },
 
