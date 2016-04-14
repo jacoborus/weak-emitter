@@ -21,11 +21,24 @@ module.exports = function () {
     }
   }
 
+  function addOnce (key, method) {
+    const link = links.get(key) || createNewLink(key)
+    const wrap = {}
+    const fn = () => {
+      method()
+      wrap.remove()
+    }
+    link.add(fn)
+    wrap.remove = () => {
+      link.delete(fn)
+    }
+  }
+
   function trigger (key) {
     const link = links.get(key)
     if (!key) return
     link.forEach(fn => fn())
   }
 
-  return { add, trigger }
+  return { add, addOnce, trigger }
 }
