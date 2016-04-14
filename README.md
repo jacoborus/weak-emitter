@@ -1,6 +1,8 @@
 arbitrary-emitter
 =================
 
+[![Build Status](https://travis-ci.org/jacoborus/arbitrary-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/arbitrary-emitter)
+
 <br><br>
 
 ---
