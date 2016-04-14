@@ -30,7 +30,7 @@ test('once', t => {
   t.end()
 })
 
-test('off', t => {
+test('off listener', t => {
   const emitter = ae()
   const obj = {}
   let control = 0
@@ -41,6 +41,26 @@ test('off', t => {
   emitter.off(obj)
   emitter.emit(obj)
   t.is(control, 2, 'remove link from subscriptions')
+  t.end()
+})
+
+test('off action', t => {
+  const emitter = ae()
+  const obj = {}
+  let control = {
+    a: 0,
+    b: 0
+  }
+  const fn = () => ++control.b
+  emitter.on(obj, () => ++control.a)
+  emitter.on(obj, fn)
+  emitter.emit(obj)
+  t.is(control.a, 1, 'control a')
+  t.is(control.b, 1, 'control b')
+  emitter.off(obj, fn)
+  emitter.emit(obj)
+  t.is(control.a, 2, 'control a')
+  t.is(control.b, 1, 'control b')
   t.end()
 })
 

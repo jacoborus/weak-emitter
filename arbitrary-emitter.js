@@ -48,8 +48,13 @@ module.exports = function () {
       }
     },
 
-    off (key) {
-      links.delete(key)
+    off (key, action) {
+      if (1 in arguments) {
+        let link = links.get(key)
+        if (link) link.delete(action)
+      } else {
+        links.delete(key)
+      }
     }
   }
 }

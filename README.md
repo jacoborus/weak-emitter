@@ -44,14 +44,14 @@ emitter.emit(obj) // won't do anything
 
 
 <a name="emitter-addonce-api"></a>
-### addOnce(key, method)
+### once(key, method)
 
 Add a listener for `key` which will trigger `method` function just one time, then listener will be removed.
 `key` can be any type of value
 
 ```js
 const obj = {}
-emitter.addOnce(obj, () => doSomethingOnce())
+emitter.once(obj, () => doSomethingOnce())
 emitter.emit(obj) // will `doSomething`
 emitter.emit(obj) // won't do anything
 ```
@@ -71,12 +71,13 @@ emitter.emit('test', 1, 2) // => 3
 
 
 <a name="emitter-off-api"></a>
-## emitter.off(key)
+## emitter.off(key[, action])
 
-Remove all listeners binded to `key`
+Remove `action` from listener `key`. If no action is specified will remove all listeners binded to `key`
 
 ```js
-emitter.off(obj)
+emitter.off(key, action) // will remove action from listener `key`
+emitter.off(key) // will remove the listener `key` and all actions binded to it
 ```
 
 
