@@ -26,14 +26,11 @@ module.exports = function () {
 
     once (key, method) {
       const link = links.get(key) || createNewLink(key)
-      const wrap = {}
-      const fn = () => {
-        method(arguments)
-        wrap.remove()
-      }
       link.add(fn)
-      wrap.remove = () => {
-        link.delete(fn)
+      const rm = () => link.delete(fn)
+      function fn () {
+        method(arguments)
+        rm()
       }
     },
 
