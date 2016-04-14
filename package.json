@@ -1,8 +1,8 @@
 {
   "name": "arbitrary-emitter",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Event emitter with Map/Set sugar",
-  "main": "index.js",
+  "main": "arbitrary-emitter.js",
   "scripts": {
     "test": "node ./test.js"
   },
