@@ -3,9 +3,9 @@ arbitrary-emitter
 
 High performance event emitter with Map/Set sugar for browser and node.js apps
 
-[![Build Status](https://travis-ci.org/jacoborus/arbitrary-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/arbitrary-emitter)
+[![Build Status](https://travis-ci.org/jacoborus/arbitrary-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/arbitrary-emitter) [![npm version](https://badge.fury.io/js/arbitrary-emitter.svg)](https://www.npmjs.com/package/arbitrary-emitter)
 
-**arbitrary-emitter** stores listeners in a ES6 Map and the actions in ES6 Sets, this improves performance when emitting multiple actions and also allows to use arbitrary values as keys for your listeners
+**arbitrary-emitter** stores listeners and actions in ES6 Map and Sets, this allows to use arbitrary values as keys for your listeners
 
 **arbitrary-emitter** is written in vanilla ES6, so you will have to transpile it before using it in old browsers or node.js < v5.9
 
@@ -18,10 +18,10 @@ const emitter = arbitraryEmitter()
 
 ## Emitter API
 
-- [emitter.on](#emitter-on-api)
-- [emitter.once](#emitter-once-api)
-- [emitter.emit](#emitter-emit-api)
-- [emitter.off](#emitter-off-api)
+- [on](#emitter-on-api)
+- [once](#emitter-once-api)
+- [emit](#emitter-emit-api)
+- [off](#emitter-off-api)
 
 
 <a name="emitter-on-api"></a>
@@ -34,9 +34,9 @@ Add a listener with `key` which will trigger `action` function.
 
 ```js
 const obj = {}
-let removeListener = emitter.on(obj, () => doSomething())
+let removeAction = emitter.on(obj, () => doSomething())
 emitter.emit(obj) // will `doSomething`
-removeListener()
+removeAction()
 emitter.emit(obj) // won't do anything
 ```
 
