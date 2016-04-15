@@ -1,7 +1,7 @@
 'use strict'
 
 const test = require('tape')
-const ae = require('./arbitrary-emitter.js')
+const ae = require('../arbitrary-emitter.js')
 
 test('on and emit', t => {
   const emitter = ae()

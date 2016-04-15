@@ -1,15 +1,14 @@
 arbitrary-emitter
 =================
 
-Event emitter with Map/Set sugar for browser and node.js apps
+High performance event emitter with Map/Set sugar for browser and node.js apps
 
 [![Build Status](https://travis-ci.org/jacoborus/arbitrary-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/arbitrary-emitter)
 
-**arbitrary-emitter** allows to use arbitrary values as keys for your events
+**arbitrary-emitter** stores listeners in a ES6 Map and the actions in ES6 Sets, this improves performance when emitting multiple actions and also allows to use arbitrary values as keys for your listeners
 
-**arbitrary-emitter** is written in vanilla ES6, so maybe you want to transpile it before using it.
+**arbitrary-emitter** is written in vanilla ES6, so you will have to transpile it before using it in old browsers or node.js < v5.9
 
-**Project in active development, API may change**
 
 ## Create a new emitter
 
@@ -59,7 +58,7 @@ emitter.emit(obj) // won't do anything
 
 
 <a name="emitter-emit-api"></a>
-## emitter.emit(key[, ...args])
+### emit(key[, ...args])
 
 `emit` methods binded to `key`, and pass the rest of the arguments to it
 
@@ -71,7 +70,7 @@ emitter.emit('test', 1, 2) // => 3
 
 
 <a name="emitter-off-api"></a>
-## emitter.off(key[, action])
+### off(key[, action])
 
 Remove `action` from listener `key`. If no action is specified will remove all listeners binded to `key`
 
@@ -90,6 +89,19 @@ emitter.off(key) // will remove the listener `key` and all actions binded to it
 ```sh
 npm test
 ```
+
+### Browser
+
+Build browser tests (`npm run build-tests`) and open `test/test.html`
+
+
+
+<a name="building"></a>
+## Building
+
+- Build UMD file: `npm run build-umd`
+- Build browser tests: `npm run build-tests`
+- Run both builds: `npm run build`
 
 
 <br><br>

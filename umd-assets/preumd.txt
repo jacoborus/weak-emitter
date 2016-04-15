@@ -1,0 +1,3 @@
+/* https://github.com/jacoborus/arbitrary-emitter */
+(function (root) {
+

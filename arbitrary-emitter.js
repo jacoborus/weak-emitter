@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function () {
+function arbitrary () {
   const links = new Map()
 
   function createNewLink (key) {
@@ -55,3 +55,5 @@ module.exports = function () {
     }
   }
 }
+
+module.exports = arbitrary
