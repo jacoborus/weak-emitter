@@ -64,7 +64,7 @@ test('off action', t => {
   t.end()
 })
 
-test('emit with arguments', t => {
+test('emit actions in order', t => {
   const emitter = ae()
   const obj = {}
   let control = ''
@@ -81,6 +81,28 @@ test('emit with arguments', t => {
   emitter.on(obj, () => {control = control + 'c'})
   emitter.emit(obj)
   t.is(control, 'aaababc', 'unsubscribe')
+
+  t.end()
+})
+
+test('emit with arguments', t => {
+  const emitter = ae()
+  const obj = {}
+  let control = {
+    a: 0,
+    b: 0,
+    c: 0
+  }
+  emitter.on(obj, (a, b, c) => {
+    control.a = a
+    control.b = b
+    control.c = c
+  })
+
+  emitter.emit(obj, 1, 2, 3)
+  t.is(control.a, 1)
+  t.is(control.b, 2)
+  t.is(control.c, 3)
 
   t.end()
 })

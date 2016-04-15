@@ -1,7 +1,7 @@
 arbitrary-emitter
 =================
 
-High performance event emitter with Map/Set sugar for browser and node.js apps
+Event emitter with Map/Set sugar for node.js and browsers (<400 bytes when gzipped)
 
 [![Build Status](https://travis-ci.org/jacoborus/arbitrary-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/arbitrary-emitter) [![npm version](https://badge.fury.io/js/arbitrary-emitter.svg)](https://www.npmjs.com/package/arbitrary-emitter)
 

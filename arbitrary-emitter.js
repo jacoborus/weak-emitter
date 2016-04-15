@@ -37,11 +37,28 @@ function arbitrary () {
     emit (key) {
       const link = links.get(key)
       if (!link) return
-      if (arguments.length > 1) {
-        let args = arguments.slice(1)
-        link.forEach(fn => apply.call(fn, args))
-      } else {
-        link.forEach(fn => fn())
+      const l = arguments.length
+      switch (l) {
+        case 1: {
+          link.forEach(fn => fn())
+          break
+        }
+        case 2: {
+          link.forEach(fn => fn(arguments[1]))
+          break
+        }
+        case 3: {
+          link.forEach(fn => fn(arguments[1], arguments[2]))
+          break
+        }
+        default: {
+          let l = arguments.length
+          let args = new Array(l - 1)
+          for (let i = 1; i < l; ++i) {
+            args[i - 1] = arguments[i]
+          }
+          link.forEach(fn => apply.call(fn, fn, args))
+        }
       }
     },
 
