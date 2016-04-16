@@ -1,7 +1,7 @@
 arbitrary-emitter
 =================
 
-Event emitter with Map/Set sugar for node.js and browsers (<400 bytes when gzipped)
+High performance event emitter with Map/Set sugar for node.js and browsers (<500 bytes when gzipped)
 
 [![Build Status](https://travis-ci.org/jacoborus/arbitrary-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/arbitrary-emitter) [![npm version](https://badge.fury.io/js/arbitrary-emitter.svg)](https://www.npmjs.com/package/arbitrary-emitter)
 
@@ -17,12 +17,6 @@ const emitter = arbitraryEmitter()
 ```
 
 ## Emitter API
-
-- [on](#emitter-on-api)
-- [once](#emitter-once-api)
-- [emit](#emitter-emit-api)
-- [off](#emitter-off-api)
-
 
 <a name="emitter-on-api"></a>
 ### on(key, action)

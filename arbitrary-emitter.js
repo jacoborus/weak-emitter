@@ -3,87 +3,90 @@
 function arbitrary () {
   const listeners = new Map()
 
-  function createNewLink (key) {
-    const bindings = new Set()
+  function oneTrigger (fn, lis) {
+    lis.launch1 = fn
+    lis.launchX = function () {
+      fn.apply(fn, arguments[0])
+    }
+  }
 
-    const link = {
+  function multipleTriggers (triggers, lis) {
+    lis.launch1 = a => triggers.forEach(f => f(a))
+    lis.launchX = function () {
+      let a = arguments[0]
+      triggers.forEach(f => f.apply(f, a))
+    }
+  }
+
+  function newListener (key) {
+    const triggers = new Set()
+
+    const lis = {
       add (fn) {
-        bindings.add(fn)
-        let size = bindings.size
+        triggers.add(fn)
+        let size = triggers.size
         if (size === 1) {
-          link.launch0 = fn
-          link.launchX = function () {
-            fn.apply(fn, arguments[0])
-          }
+          oneTrigger(fn, lis)
         } else if (size === 2) {
-          // link.launch0 = () => bindings.forEach(f => f())
-          link.launch0 = a => bindings.forEach(f => f(a))
-          link.launchX = function () {
-            let a = arguments[0]
-            bindings.forEach(f => f.apply(f, a))
-          }
+          multipleTriggers(triggers, lis)
         }
       },
       rm (method) {
-        bindings.delete(method)
-        let size = bindings.size
-        if (size === 0) {
+        triggers.delete(method)
+        let size = triggers.size
+        if (!size) {
           listeners.delete(key)
         } else if (size === 1) {
           let fn
-          bindings.forEach(f => {fn = f})
-          link.launch0 = fn
-          link.launchX = function () {
-            fn.apply(fn, arguments[0])
-          }
+          triggers.forEach(f => {fn = f})
+          oneTrigger(fn, lis)
         } else if (size === 2) {
-          // link.launch0 = () => bindings.forEach(f => f())
-          link.launch0 = a => bindings.forEach(f => f(a))
-          link.launchX = function () {
-            let a = arguments[0]
-            bindings.forEach(f => f.apply(f, a))
-          }
+          multipleTriggers(triggers, lis)
         }
       }
     }
 
-    listeners.set(key, link)
-    return link
+    listeners.set(key, lis)
+    return lis
   }
 
   return {
     on (key, method) {
-      const link = listeners.get(key) || createNewLink(key)
-      link.add(method)
+      const lis = listeners.get(key) || newListener(key)
+      lis.add(method)
       let isSubscribed = true
       return () => {
         if (isSubscribed) {
-          link.rm(method)
+          lis.rm(method)
           isSubscribed = false
         }
       }
     },
 
     once (key, method) {
-      const link = listeners.get(key) || createNewLink(key)
-      link.add(fn)
+      const lis = listeners.get(key) || newListener(key)
+      lis.add(fn)
       function fn () {
         method(arguments)
-        link.rm(fn)
+        lis.rm(fn)
       }
     },
 
     emit (key) {
-      const link = listeners.get(key)
-      if (!link) return
+      const lis = listeners.get(key)
+      if (!lis) return
       const l = arguments.length
       switch (l) {
         case 1: {
-          link.launch0()
+          lis.launch1()
           break
         }
         case 2: {
-          link.launch0(arguments[1])
+          lis.launch1(arguments[1])
+          break
+        }
+        case 3: {
+          lis.launch1(arguments[1], arguments[2])
           break
         }
         default: {
@@ -92,15 +95,15 @@ function arbitrary () {
           for (let i = 1; i < l; ++i) {
             args[i - 1] = arguments[i]
           }
-          link.launchX(args)
+          lis.launchX(args)
         }
       }
     },
 
     off (key, action) {
       if (1 in arguments) {
-        let link = listeners.get(key)
-        if (link) link.rm(action)
+        let lis = listeners.get(key)
+        if (lis) lis.rm(action)
       } else {
         listeners.delete(key)
       }
