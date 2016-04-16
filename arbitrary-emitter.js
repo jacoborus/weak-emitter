@@ -1,54 +1,89 @@
 'use strict'
 
 function arbitrary () {
-  const links = new Map()
+  const listeners = new Map()
 
   function createNewLink (key) {
-    const link = new Set()
-    links.set(key, link)
+    const bindings = new Set()
+
+    const link = {
+      add (fn) {
+        bindings.add(fn)
+        let size = bindings.size
+        if (size === 1) {
+          link.launch0 = fn
+          link.launchX = function () {
+            fn.apply(fn, arguments[0])
+          }
+        } else if (size === 2) {
+          // link.launch0 = () => bindings.forEach(f => f())
+          link.launch0 = a => bindings.forEach(f => f(a))
+          link.launchX = function () {
+            let a = arguments[0]
+            bindings.forEach(f => f.apply(f, a))
+          }
+        }
+      },
+      rm (method) {
+        bindings.delete(method)
+        let size = bindings.size
+        if (size === 0) {
+          listeners.delete(key)
+        } else if (size === 1) {
+          let fn
+          bindings.forEach(f => {fn = f})
+          link.launch0 = fn
+          link.launchX = function () {
+            fn.apply(fn, arguments[0])
+          }
+        } else if (size === 2) {
+          // link.launch0 = () => bindings.forEach(f => f())
+          link.launch0 = a => bindings.forEach(f => f(a))
+          link.launchX = function () {
+            let a = arguments[0]
+            bindings.forEach(f => f.apply(f, a))
+          }
+        }
+      }
+    }
+
+    listeners.set(key, link)
     return link
   }
 
-  const apply = Function.prototype.apply
-
   return {
     on (key, method) {
-      const link = links.get(key) || createNewLink(key)
+      const link = listeners.get(key) || createNewLink(key)
       link.add(method)
       let isSubscribed = true
       return () => {
         if (isSubscribed) {
-          link.delete(method)
+          link.rm(method)
           isSubscribed = false
         }
       }
     },
 
     once (key, method) {
-      const link = links.get(key) || createNewLink(key)
+      const link = listeners.get(key) || createNewLink(key)
       link.add(fn)
-      const rm = () => link.delete(fn)
       function fn () {
-        rm()
         method(arguments)
+        link.rm(fn)
       }
     },
 
     emit (key) {
-      const link = links.get(key)
+      const link = listeners.get(key)
       if (!link) return
       const l = arguments.length
       switch (l) {
         case 1: {
-          link.forEach(fn => fn())
+          link.launch0()
           break
         }
         case 2: {
-          link.forEach(fn => fn(arguments[1]))
-          break
-        }
-        case 3: {
-          link.forEach(fn => fn(arguments[1], arguments[2]))
+          link.launch0(arguments[1])
           break
         }
         default: {
@@ -57,17 +92,17 @@ function arbitrary () {
           for (let i = 1; i < l; ++i) {
             args[i - 1] = arguments[i]
           }
-          link.forEach(fn => apply.call(fn, fn, args))
+          link.launchX(args)
         }
       }
     },
 
     off (key, action) {
       if (1 in arguments) {
-        let link = links.get(key)
-        if (link) link.delete(action)
+        let link = listeners.get(key)
+        if (link) link.rm(action)
       } else {
-        links.delete(key)
+        listeners.delete(key)
       }
     }
   }
