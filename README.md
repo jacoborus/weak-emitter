@@ -1,7 +1,7 @@
 arbitrary-emitter
 =================
 
-Event emitter with Map/Set sugar for modern browsers and node.js (~500 bytes)
+Event emitter with Map/Set sugar for modern browsers and node.js (~500 bytes). [arbitrary-emitter.jacoborus.codes](http://arbitrary-emitter.jacoborus.codes)
 
 [![Build Status](https://travis-ci.org/jacoborus/arbitrary-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/arbitrary-emitter) [![npm version](https://badge.fury.io/js/arbitrary-emitter.svg)](https://www.npmjs.com/package/arbitrary-emitter)
 
