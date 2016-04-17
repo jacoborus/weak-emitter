@@ -1,0 +1,61 @@
+body {
+  background: #d5dcdd;
+  color: #444;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+}
+.container {
+  max-width: 60em;
+  padding: 6em 10em 4em;
+  box-sizing: border-box;
+  background: #f4f4f4;
+  margin: 4em auto 4em;
+}
+a {
+  color: #000;
+  text-decoration: none;
+  font-weight: 400;
+}
+h1 {
+  font-size: 3em;
+  font-weight: 800;
+}
+h2 {
+  font-size: 2em;
+}
+h1, h2, h3, h4, h5 {
+  /* font-family: 'Bitter', serif; */
+}
+p {
+  font-weight: 300;
+}
+p.cite {
+  font-size: 1.2em;
+  margin-bottom: 2em;
+  font-weight: 600;
+}
+p code, li code {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  background-color: #e1eaea;
+  padding: .1em .2em;
+}
+a.g-link:hover, a.author-link:hover {
+  border-bottom: solid 1px;
+  color: #000;
+}
+a.g-link, a.author-link {
+  font-size: .8em;
+  font-weight: 300;
+  color: #555;
+  border-bottom: dotted 1px #555;
+  text-decoration: none;
+}
+a.author-link {
+  float: right;
+}
+:not(pre) > code[class*="language-js"], pre[class*="language-js"] {
+    background-color: #e5eced;
+}
+:not(pre) > code[class*="language-"], pre[class*="language-"] {
+    background-color: #e5eced;
+}

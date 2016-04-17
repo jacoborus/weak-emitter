@@ -1,0 +1,24 @@
+{
+  "name": "arbitrary-emitter-gh-page",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist && mkdir dist && cp node_modules/normalize.css/normalize.css dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacoborus/arbitrary-emitter.git"
+  },
+  "author": "Jacobo Tabernero",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jacoborus/arbitrary-emitter/issues"
+  },
+  "homepage": "https://github.com/jacoborus/arbitrary-emitter#readme",
+  "devDependencies": {
+    "normalize.css": "^4.1.1",
+    "prismjs": "^1.4.1"
+  }
+}
