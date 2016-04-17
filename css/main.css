@@ -10,6 +10,7 @@ body {
   box-sizing: border-box;
   background: #f4f4f4;
   margin: 4em auto 4em;
+  border-radius: 4px;
 }
 a {
   color: #000;
