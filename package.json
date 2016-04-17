@@ -1,6 +1,6 @@
 {
   "name": "arbitrary-emitter",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "description": "Hi-Perf event emitter with Map/Set sugar",
   "main": "arbitrary-emitter.js",
   "scripts": {

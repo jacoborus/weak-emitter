@@ -3,14 +3,14 @@
 function arbitrary () {
   const listeners = new Map()
 
-  function oneTrigger (fn, lis) {
+  const oneTrigger = (fn, lis) => {
     lis.launch1 = fn
     lis.launchX = function () {
       fn.apply(fn, arguments[0])
     }
   }
 
-  function multipleTriggers (triggers, lis) {
+  const multipleTriggers = (triggers, lis) => {
     lis.launch1 = (a, b) => triggers.forEach(f => f(a, b))
     lis.launchX = function () {
       let a = arguments[0]
@@ -18,7 +18,7 @@ function arbitrary () {
     }
   }
 
-  function newListener (key) {
+  const newListener = key => {
     const triggers = new Set()
 
     const lis = {
@@ -75,8 +75,7 @@ function arbitrary () {
     emit (key) {
       const lis = listeners.get(key)
       if (!lis) return
-      const l = arguments.length
-      switch (l) {
+      switch (arguments.length) {
         case 1: {
           lis.launch1()
           break

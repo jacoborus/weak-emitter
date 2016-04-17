@@ -1,27 +1,33 @@
 arbitrary-emitter
 =================
 
-High performance event emitter with Map/Set sugar for browsers and node.js (<500 bytes when gzipped)
+Event emitter with Map/Set sugar for modern browsers and node.js (~500 bytes)
 
 [![Build Status](https://travis-ci.org/jacoborus/arbitrary-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/arbitrary-emitter) [![npm version](https://badge.fury.io/js/arbitrary-emitter.svg)](https://www.npmjs.com/package/arbitrary-emitter)
 
-**arbitrary-emitter** stores listeners and actions in Maps, this allows to use arbitrary values as keys for your listeners
+**arbitrary-emitter** stores listeners and actions in Maps, this allows to use arbitrary values as keys for your listeners.
 
 It's written in vanilla ES6, so you will have to transpile it before using it in old browsers or node.js < v5.9
 
 ## Features
 
 - works in browsers and node.js
-- allows to use arbitrary values as keys for listeners
-- really small footprint (~500 bytes when gzipped)
-- blazing fast
+- allows to use **arbitrary values** as keys for listeners
+- really small footprint (**~500 bytes** when gzipped)
+- **blazing fast**
 - conventional api (`on`, `off`, `once` and `emit`)
 - `on` method returns an unsubscription function (like in redux.js)
 
-## Create a new emitter
+## Usage
+
+Install with [npm](https://www.npmjs.com/package/arbitrary-emitter), clone the repo or download and extract the [zip](https://github.com/jacoborus/arbitrary-emitter/archive/master.zip). Then import or insert it as script tag.
 
 ```js
 const emitter = arbitraryEmitter()
+const obj = {}
+emitter.on(obj, () => doSomething())
+// will `doSomething`
+emitter.emit(obj)
 ```
 
 ## Emitter API
@@ -29,17 +35,17 @@ const emitter = arbitraryEmitter()
 <a name="emitter-on-api"></a>
 ### on(key, action)
 
-Add a listener with `key` which will trigger `action` function. 
+Adds the listener `action` to the `Set` for the event tagged with `key`. 
 `key` can be any type of value.
 
-`on` returns unsubscribe  method
+`on` returns removeListener  method
 
 ```js
 const obj = {}
-let removeAction = emitter.on(obj, () => doSomething())
+let removeListener = emitter.on(obj, () => doSomething())
 emitter.emit(obj) // will `doSomething`
 emitter.emit(obj) // will `doSomething`
-removeAction()
+removeListener()
 emitter.emit(obj) // won't do anything
 ```
 
@@ -48,13 +54,13 @@ emitter.emit(obj) // won't do anything
 <a name="emitter-addonce-api"></a>
 ### once(key, action)
 
-Add a listener for `key` which will trigger `action` function just one time, then listener will be removed.
+Adds the listener `action` to the `Set` for the event tagged with `key`. `action` will be triggered just one time, then it will be removed.
 `key` can be any type of value
 
 ```js
 const obj = {}
 emitter.once(obj, () => doSomethingOnce())
-emitter.emit(obj) // will `doSomething`
+emitter.emit(obj) // will `doSomethingOnce`
 emitter.emit(obj) // won't do anything
 ```
 
@@ -63,7 +69,7 @@ emitter.emit(obj) // won't do anything
 <a name="emitter-emit-api"></a>
 ### emit(key[, ...args])
 
-`emit` methods binded to `key`, and pass the rest of the arguments to it
+Synchronously calls each of the listeners registered for the event tagged with `key`, and pass the rest of the arguments to them
 
 ```js
 emitter.on('test', (a, b) => console.log(a + b))
@@ -75,11 +81,11 @@ emitter.emit('test', 1, 2) // => 3
 <a name="emitter-off-api"></a>
 ### off(key[, action])
 
-Remove `action` from listener `key`. If no action is specified will remove all listeners binded to `key`
+Remove `action` from listeners tagged with `key`. If no `action` is specified will remove all listeners tagged with `key`
 
 ```js
-emitter.off(key, action) // will remove action from listener `key`
-emitter.off(key) // will remove the listener `key` and all actions binded to it
+emitter.off(key, action) // will remove action from listeners
+emitter.off(key) // will remove all the listeners tagged with `key`, and the tag itself
 ```
 
 
