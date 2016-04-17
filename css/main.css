@@ -30,6 +30,10 @@ h1, h2, h3, h4, h5 {
 p {
   font-weight: 300;
 }
+ul {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+}
 p.cite {
   font-size: 1.2em;
   margin-bottom: 2em;

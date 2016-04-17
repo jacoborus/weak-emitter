@@ -14,19 +14,40 @@
 <a class="g-link" href="https://github.com/jacoborus/arbitrary-emitter">github.com/jacoborus/arbitrary-emitter</a> <a class="author-link" href="http://jacoborus.codes">jacoborus.codes</a>
 <h1 id="arbitrary-emitter">arbitrary-emitter</h1>
 
-<p class="cite">High performance event emitter with Map/Set sugar for node.js and browsers </p>
+<p class="cite">Event emitter with Map/Set sugar for modern browsers and node.js. </p>
 
-<p><strong>arbitrary-emitter</strong> stores listeners and actions in Maps and Sets, this allows to use <strong>arbitrary values as keys</strong> for your listeners</p>
-<p>It works on node.js and browsers, and it's just <strong>500 bytes</strong> when gzipped</p>
-<p>This tool is written in <strong>vanilla ES6</strong>, so you will have to transpile it before using it in old browsers or node.js &lt; v5.9</p>
+<p><a href="https://travis-ci.org/jacoborus/arbitrary-emitter"><img src="https://travis-ci.org/jacoborus/arbitrary-emitter.svg?branch=master" alt="Build Status" title=""></a> <a href="https://www.npmjs.com/package/arbitrary-emitter"><img src="https://badge.fury.io/js/arbitrary-emitter.svg" alt="npm version" title=""></a></p>
 
+<p><strong>arbitrary-emitter</strong> stores listeners and actions in Maps, this allows to use arbitrary values as keys for your listeners.</p>
 
-
-<h2 id="create-a-new-emitter">Create a new emitter</h2>
+<p>It’s written in vanilla ES6, so you will have to transpile it before using it in old browsers or node.js &lt; v5.9</p>
 
 
 
-<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">const</span> emitter = arbitraryEmitter()</code></pre>
+<h2 id="features">Features</h2>
+
+<ul>
+<li>works in browsers and node.js</li>
+<li>allows to use <strong>arbitrary values</strong> as keys for listeners</li>
+<li>really small footprint (<strong>~500 bytes</strong> when gzipped)</li>
+<li><strong>blazing fast</strong></li>
+<li>conventional api (<code>on</code>, <code>off</code>, <code>once</code> and <code>emit</code>)</li>
+<li><code>on</code> method returns an unsubscription function (like in redux.js)</li>
+</ul>
+
+
+
+<h2 id="usage">Usage</h2>
+
+<p>Install with <a href="https://www.npmjs.com/package/arbitrary-emitter">npm</a>, clone the repo or download and extract the <a href="https://github.com/jacoborus/arbitrary-emitter/archive/master.zip">zip</a>. Then import or insert it as script tag.</p>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">const</span> emitter = arbitraryEmitter()
+<span class="hljs-keyword">const</span> obj = {}
+emitter.on(obj, () =&gt; doSomething())
+<span class="hljs-comment">// will `doSomething`</span>
+emitter.emit(obj)</code></pre>
 
 
 
@@ -38,17 +59,18 @@
 
 <h3 id="onkey-action">on(key, action)</h3>
 
-<p>Add a listener with <code>key</code> which will trigger <code>action</code> function.  <br>
+<p>Adds the listener <code>action</code> to the <code>Set</code> for the event tagged with <code>key</code>.  <br>
 <code>key</code> can be any type of value.</p>
 
-<p><code>on</code> returns unsubscribe  method</p>
+<p><code>on</code> returns removeListener  method</p>
 
 
 
 <pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">const</span> obj = {}
-<span class="hljs-keyword">let</span> removeAction = emitter.on(obj, () =&gt; doSomething())
+<span class="hljs-keyword">let</span> removeListener = emitter.on(obj, () =&gt; doSomething())
 emitter.emit(obj) <span class="hljs-comment">// will `doSomething`</span>
-removeAction()
+emitter.emit(obj) <span class="hljs-comment">// will `doSomething`</span>
+removeListener()
 emitter.emit(obj) <span class="hljs-comment">// won't do anything</span></code></pre>
 
 <p><a></a></p>
@@ -57,14 +79,14 @@ emitter.emit(obj) <span class="hljs-comment">// won't do anything</span></code><
 
 <h3 id="oncekey-action">once(key, action)</h3>
 
-<p>Add a listener for <code>key</code> which will trigger <code>action</code> function just one time, then listener will be removed. <br>
+<p>Adds the listener <code>action</code> to the <code>Set</code> for the event tagged with <code>key</code>. <code>action</code> will be triggered just one time, then it will be removed. <br>
 <code>key</code> can be any type of value</p>
 
 
 
 <pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">const</span> obj = {}
 emitter.once(obj, () =&gt; doSomethingOnce())
-emitter.emit(obj) <span class="hljs-comment">// will `doSomething`</span>
+emitter.emit(obj) <span class="hljs-comment">// will `doSomethingOnce`</span>
 emitter.emit(obj) <span class="hljs-comment">// won't do anything</span></code></pre>
 
 <p><a></a></p>
@@ -73,7 +95,7 @@ emitter.emit(obj) <span class="hljs-comment">// won't do anything</span></code><
 
 <h3 id="emitkey-args">emit(key[, …args])</h3>
 
-<p><code>emit</code> methods binded to <code>key</code>, and pass the rest of the arguments to it</p>
+<p>Synchronously calls each of the listeners registered for the event tagged with <code>key</code>, and pass the rest of the arguments to them</p>
 
 
 
@@ -86,12 +108,12 @@ emitter.emit(<span class="hljs-string">'test'</span>, <span class="hljs-number">
 
 <h3 id="offkey-action">off(key[, action])</h3>
 
-<p>Remove <code>action</code> from listener <code>key</code>. If no action is specified will remove all listeners binded to <code>key</code></p>
+<p>Remove <code>action</code> from listeners tagged with <code>key</code>. If no <code>action</code> is specified will remove all listeners tagged with <code>key</code></p>
 
 
 
-<pre class="prettyprint"><code class="language-js hljs ">emitter.off(key, action) <span class="hljs-comment">// will remove action from listener `key`</span>
-emitter.off(key) <span class="hljs-comment">// will remove the listener `key` and all actions binded to it</span></code></pre>
+<pre class="prettyprint"><code class="language-js hljs ">emitter.off(key, action) <span class="hljs-comment">// will remove action from listeners</span>
+emitter.off(key) <span class="hljs-comment">// will remove all the listeners tagged with `key`, and the tag itself</span></code></pre>
 
 <p><a></a></p>
 
