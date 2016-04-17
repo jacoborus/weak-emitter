@@ -11,7 +11,7 @@ function arbitrary () {
   }
 
   function multipleTriggers (triggers, lis) {
-    lis.launch1 = a => triggers.forEach(f => f(a))
+    lis.launch1 = (a, b) => triggers.forEach(f => f(a, b))
     lis.launchX = function () {
       let a = arguments[0]
       triggers.forEach(f => f.apply(f, a))
