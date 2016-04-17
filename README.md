@@ -1,14 +1,22 @@
 arbitrary-emitter
 =================
 
-High performance event emitter with Map/Set sugar for node.js and browsers (<500 bytes when gzipped)
+High performance event emitter with Map/Set sugar for browsers and node.js (<500 bytes when gzipped)
 
 [![Build Status](https://travis-ci.org/jacoborus/arbitrary-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/arbitrary-emitter) [![npm version](https://badge.fury.io/js/arbitrary-emitter.svg)](https://www.npmjs.com/package/arbitrary-emitter)
 
-**arbitrary-emitter** stores listeners and actions in ES6 Map and Sets, this allows to use arbitrary values as keys for your listeners
+**arbitrary-emitter** stores listeners and actions in Maps, this allows to use arbitrary values as keys for your listeners
 
-**arbitrary-emitter** is written in vanilla ES6, so you will have to transpile it before using it in old browsers or node.js < v5.9
+It's written in vanilla ES6, so you will have to transpile it before using it in old browsers or node.js < v5.9
 
+## Features
+
+- works in browsers and node.js
+- allows to use arbitrary values as keys for listeners
+- really small footprint (~500 bytes when gzipped)
+- blazing fast
+- conventional api (`on`, `off`, `once` and `emit`)
+- `on` method returns an unsubscription function (like in redux.js)
 
 ## Create a new emitter
 
@@ -29,6 +37,7 @@ Add a listener with `key` which will trigger `action` function.
 ```js
 const obj = {}
 let removeAction = emitter.on(obj, () => doSomething())
+emitter.emit(obj) // will `doSomething`
 emitter.emit(obj) // will `doSomething`
 removeAction()
 emitter.emit(obj) // won't do anything
