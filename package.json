@@ -1,7 +1,7 @@
 {
   "name": "arbitrary-emitter",
-  "version": "0.7.5",
-  "description": "Hi-Perf event emitter with Map/Set sugar",
+  "version": "0.7.6",
+  "description": "Event emitter with Map/Set sugar for modern browsers and node.js",
   "main": "arbitrary-emitter.js",
   "scripts": {
     "linter": "eslint arbitrary-emitter.js tests/tests.js",

@@ -4,6 +4,7 @@ function arbitrary () {
   const listeners = new Map()
 
   const oneTrigger = (fn, lis) => {
+    lis.launch0 = fn
     lis.launch1 = fn
     lis.launchX = function () {
       fn.apply(fn, arguments[0])
@@ -11,6 +12,7 @@ function arbitrary () {
   }
 
   const multipleTriggers = (triggers, lis) => {
+    lis.launch0 = () => triggers.forEach(f => f())
     lis.launch1 = (a, b) => triggers.forEach(f => f(a, b))
     lis.launchX = function () {
       let a = arguments[0]
@@ -77,7 +79,7 @@ function arbitrary () {
       if (!lis) return
       switch (arguments.length) {
         case 1: {
-          lis.launch1()
+          lis.launch0()
           break
         }
         case 2: {
