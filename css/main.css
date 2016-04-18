@@ -8,9 +8,21 @@ body {
   max-width: 60em;
   padding: 6em 10em 4em;
   box-sizing: border-box;
-  background: #f4f4f4;
-  margin: 4em auto 4em;
+  background: #fafafa;
+  margin: 4em auto;
   border-radius: 4px;
+}
+@media (max-width:90em) and (min-width:70em) {
+  .container {
+    margin: 2em auto;
+    padding: 3em 5em 2em;
+  }
+}
+@media (max-width:70em) {
+  .container {
+    margin: 0 auto;
+    padding: 1em 2em 1em;
+  }
 }
 a {
   color: #000;
