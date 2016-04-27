@@ -45,6 +45,9 @@ function arbitrary () {
         } else if (size === 2) {
           multipleTriggers(triggers, lis)
         }
+      },
+      trigger (args) {
+        triggers.forEach(f => f.apply(f, args))
       }
     }
 
@@ -99,6 +102,19 @@ function arbitrary () {
           lis.launchX(args)
         }
       }
+    },
+
+    trigger (key) {
+      const lis = listeners.get(key)
+      if (!lis) return
+      if (arguments.length === 1) {
+        return lis.launch0()
+      }
+      let args = arguments[1]
+      if (!Array.isArray(args)) {
+        throw new Error('arguments list has wrong type')
+      }
+      lis.trigger(arguments[1])
     },
 
     off (key, action) {
