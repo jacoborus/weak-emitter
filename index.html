@@ -106,11 +106,22 @@ emitter.emit(<span class="hljs-string">'test'</span>, <span class="hljs-number">
 
 
 
+<a name="emitter-trigger-api"></a>
+
+<h3 id="triggerkey-args">trigger(key[, args])</h3>
+
+<p>Synchronously calls each of the listeners registered for the event tagged with <code>key</code>, and pass <code>args</code> array as arguments to them</p>
+
+<pre class="prettyprint"><code class="language-js hljs ">emitter.on(<span class="hljs-string">'test'</span>, (a, b) =&gt; console.log(a + b))
+emitter.emit('test', [1, 2]) // =&gt; 3</span></code></pre>
+
+<p><a></a></p>
+
+
+
 <h3 id="offkey-action">off(key[, action])</h3>
 
 <p>Remove <code>action</code> from listeners tagged with <code>key</code>. If no <code>action</code> is specified will remove all listeners tagged with <code>key</code></p>
-
-
 
 <pre class="prettyprint"><code class="language-js hljs ">emitter.off(key, action) <span class="hljs-comment">// will remove action from listeners</span>
 emitter.off(key) <span class="hljs-comment">// will remove all the listeners tagged with `key`, and the tag itself</span></code></pre>
