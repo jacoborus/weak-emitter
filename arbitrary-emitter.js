@@ -3,20 +3,18 @@
 function arbitrary () {
   const listeners = new Map()
 
-  const oneTrigger = (fn, lis) => {
-    lis.launch0 = fn
-    lis.launch1 = fn
-    lis.launchX = function () {
-      fn.apply(fn, arguments[0])
-    }
-  }
-
-  const multipleTriggers = (triggers, lis) => {
-    lis.launch0 = () => triggers.forEach(f => f())
-    lis.launch1 = (a, b) => triggers.forEach(f => f(a, b))
-    lis.launchX = function () {
-      let a = arguments[0]
-      triggers.forEach(f => f.apply(f, a))
+  function setEmitters (lis, triggers) {
+    const size = triggers.size
+    if (!size) return listeners.delete(lis.key)
+    if (size === 1) {
+      let fn
+      triggers.forEach(f => { fn = f })
+      lis.launch0 = lis.launch1 = fn
+      lis.launchX = args => fn.apply(fn, args)
+    } else {
+      lis.launch0 = () => triggers.forEach(f => f())
+      lis.launch1 = (a, b) => triggers.forEach(f => f(a, b))
+      lis.launchX = lis.trigger
     }
   }
 
@@ -24,27 +22,14 @@ function arbitrary () {
     const triggers = new Set()
 
     const lis = {
+      key,
       add (fn) {
         triggers.add(fn)
-        let size = triggers.size
-        if (size === 1) {
-          oneTrigger(fn, lis)
-        } else if (size === 2) {
-          multipleTriggers(triggers, lis)
-        }
+        setEmitters(lis, triggers)
       },
       rm (method) {
         triggers.delete(method)
-        let size = triggers.size
-        if (!size) {
-          listeners.delete(key)
-        } else if (size === 1) {
-          let fn
-          triggers.forEach(f => { fn = f })
-          oneTrigger(fn, lis)
-        } else if (size === 2) {
-          multipleTriggers(triggers, lis)
-        }
+        setEmitters(lis, triggers)
       },
       trigger (args) {
         triggers.forEach(f => f.apply(f, args))
@@ -80,28 +65,14 @@ function arbitrary () {
     emit (key) {
       const lis = listeners.get(key)
       if (!lis) return
-      switch (arguments.length) {
-        case 1: {
-          lis.launch0()
-          break
-        }
-        case 2: {
-          lis.launch1(arguments[1])
-          break
-        }
-        case 3: {
-          lis.launch1(arguments[1], arguments[2])
-          break
-        }
-        default: {
-          let l = arguments.length
-          let args = new Array(l - 1)
-          for (let i = 1; i < l; ++i) {
-            args[i - 1] = arguments[i]
-          }
-          lis.launchX(args)
-        }
+      const al = arguments.length
+      if (al === 1) return lis.launch0()
+      if (al > 4) return lis.launch1(arguments[1], arguments[2])
+      let args = new Array(al - 1)
+      for (let i = 1; i < al; ++i) {
+        args[i - 1] = arguments[i]
       }
+      lis.launchX(args)
     },
 
     trigger (key) {
@@ -112,9 +83,9 @@ function arbitrary () {
       }
       let args = arguments[1]
       if (!Array.isArray(args)) {
-        throw new Error('arguments list has wrong type')
+        throw new Error('arguments has wrong type')
       }
-      lis.trigger(arguments[1])
+      lis.trigger(args)
     },
 
     off (key, action) {

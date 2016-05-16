@@ -149,7 +149,7 @@ test('trigger with arguments', t => {
 
   t.throws(
     () => emitter.trigger(obj, 1),
-    /arguments list has wrong type/,
+    /arguments has wrong type/,
     'throws on wrong arguments list type'
   )
 

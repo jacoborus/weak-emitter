@@ -1,6 +1,6 @@
 {
   "name": "arbitrary-emitter",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "Event emitter with Map/Set sugar for modern browsers and node.js",
   "main": "arbitrary-emitter.js",
   "scripts": {
@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/jacoborus/arbitrary-emitter",
   "devDependencies": {
+    "browserify": "^13.0.1",
     "standard": "^7.0.1",
     "tape": "^4.5.1"
   }
