@@ -68,17 +68,17 @@ test('emit actions in order', t => {
   const emitter = ae()
   const obj = {}
   let control = ''
-  emitter.on(obj, () => {control = control + 'a'})
+  emitter.on(obj, () => { control = control + 'a' })
   emitter.emit(obj)
   t.is(control, 'a', 'trigger')
   emitter.emit(obj)
   t.is(control, 'aa', 'trigger')
 
-  emitter.on(obj, () => {control = control + 'b'})
+  emitter.on(obj, () => { control = control + 'b' })
   emitter.emit(obj)
   t.is(control, 'aaab', 'unsubscribe')
 
-  emitter.on(obj, () => {control = control + 'c'})
+  emitter.on(obj, () => { control = control + 'c' })
   emitter.emit(obj)
   t.is(control, 'aaababc', 'unsubscribe')
 
@@ -111,17 +111,17 @@ test('trigger actions in order', t => {
   const emitter = ae()
   const obj = {}
   let control = ''
-  emitter.on(obj, () => {control = control + 'a'})
+  emitter.on(obj, () => { control = control + 'a' })
   emitter.trigger(obj)
   t.is(control, 'a', 'trigger')
   emitter.trigger(obj)
   t.is(control, 'aa', 'trigger')
 
-  emitter.on(obj, () => {control = control + 'b'})
+  emitter.on(obj, () => { control = control + 'b' })
   emitter.trigger(obj)
   t.is(control, 'aaab', 'unsubscribe')
 
-  emitter.on(obj, () => {control = control + 'c'})
+  emitter.on(obj, () => { control = control + 'c' })
   emitter.trigger(obj)
   t.is(control, 'aaababc', 'unsubscribe')
 

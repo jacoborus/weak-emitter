@@ -40,7 +40,7 @@ function arbitrary () {
           listeners.delete(key)
         } else if (size === 1) {
           let fn
-          triggers.forEach(f => {fn = f})
+          triggers.forEach(f => { fn = f })
           oneTrigger(fn, lis)
         } else if (size === 2) {
           multipleTriggers(triggers, lis)
