@@ -5,8 +5,8 @@ function arbitrary () {
 
   function setEmitters (lis, triggers) {
     const size = triggers.size
-    if (!size) return listeners.delete(lis.key)
-    if (size === 1) {
+    if (!size) listeners.delete(lis.key)
+    else if (size === 1) {
       let fn
       triggers.forEach(f => { fn = f })
       lis.launch0 = lis.launch1 = fn
@@ -66,13 +66,15 @@ function arbitrary () {
       const lis = listeners.get(key)
       if (!lis) return
       const al = arguments.length
-      if (al === 1) return lis.launch0()
-      if (al > 4) return lis.launch1(arguments[1], arguments[2])
-      let args = new Array(al - 1)
-      for (let i = 1; i < al; ++i) {
-        args[i - 1] = arguments[i]
+      if (al === 1) lis.launch0()
+      else if (al > 4) lis.launch1(arguments[1], arguments[2])
+      else {
+        let args = new Array(al - 1)
+        for (let i = 1; i < al; ++i) {
+          args[i - 1] = arguments[i]
+        }
+        lis.launchX(args)
       }
-      lis.launchX(args)
     },
 
     trigger (key) {
@@ -82,19 +84,15 @@ function arbitrary () {
         return lis.launch0()
       }
       let args = arguments[1]
-      if (!Array.isArray(args)) {
+      if (typeof args !== 'object') {
         throw new Error('arguments has wrong type')
       }
       lis.trigger(args)
     },
 
     off (key, action) {
-      if (1 in arguments) {
-        let lis = listeners.get(key)
-        if (lis) lis.rm(action)
-      } else {
-        listeners.delete(key)
-      }
+      if (!(1 in arguments)) listeners.delete(key)
+      else if (listeners.has(key)) listeners.get(key).rm(action)
     }
   }
 }
