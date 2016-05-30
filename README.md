@@ -1,7 +1,7 @@
 arbitrary-emitter
 =================
 
-Event emitter with Map/Set sugar for modern browsers and node.js (~500 bytes). [arbitrary-emitter.jacoborus.codes](http://arbitrary-emitter.jacoborus.codes)
+Event emitter with ES6 Map sugar for modern browsers and node.js (~400 bytes). [arbitrary-emitter.jacoborus.codes](http://arbitrary-emitter.jacoborus.codes)
 
 [![Build Status](https://travis-ci.org/jacoborus/arbitrary-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/arbitrary-emitter) [![npm version](https://badge.fury.io/js/arbitrary-emitter.svg)](https://www.npmjs.com/package/arbitrary-emitter)
 
@@ -13,7 +13,7 @@ It's written in vanilla ES6, so you will have to transpile it before using it in
 
 - works in browsers and node.js
 - allows to use **arbitrary values** as keys for listeners
-- really small footprint (**~500 bytes** when gzipped)
+- really small footprint (**~400 bytes** when gzipped)
 - **blazing fast**
 - conventional api (`on`, `off`, `once` and `emit`)
 - `on` method returns an unsubscription function (like in redux.js)

@@ -89,69 +89,12 @@ test('emit with arguments', t => {
   const emitter = ae()
   const obj = {}
   let control = {
-    a: 0,
-    b: 0,
-    c: 0
+    a: 0
   }
-  emitter.on(obj, (a, b, c) => {
-    control.a = a
-    control.b = b
-    control.c = c
-  })
+  emitter.on(obj, a => { control.a = a })
 
-  emitter.emit(obj, 1, 2, 3)
+  emitter.emit(obj, 1)
   t.is(control.a, 1)
-  t.is(control.b, 2)
-  t.is(control.c, 3)
-
-  t.end()
-})
-
-test('trigger actions in order', t => {
-  const emitter = ae()
-  const obj = {}
-  let control = ''
-  emitter.on(obj, () => { control = control + 'a' })
-  emitter.trigger(obj)
-  t.is(control, 'a', 'trigger')
-  emitter.trigger(obj)
-  t.is(control, 'aa', 'trigger')
-
-  emitter.on(obj, () => { control = control + 'b' })
-  emitter.trigger(obj)
-  t.is(control, 'aaab', 'unsubscribe')
-
-  emitter.on(obj, () => { control = control + 'c' })
-  emitter.trigger(obj)
-  t.is(control, 'aaababc', 'unsubscribe')
-
-  t.end()
-})
-
-test('trigger with arguments', t => {
-  const emitter = ae()
-  const obj = {}
-  let control = {
-    a: 0,
-    b: 0,
-    c: 0
-  }
-  emitter.on(obj, (a, b, c) => {
-    control.a = a
-    control.b = b
-    control.c = c
-  })
-
-  emitter.trigger(obj, [1, 2, 3])
-  t.is(control.a, 1)
-  t.is(control.b, 2)
-  t.is(control.c, 3)
-
-  t.throws(
-    () => emitter.trigger(obj, 1),
-    /arguments has wrong type/,
-    'throws on wrong arguments list type'
-  )
 
   t.end()
 })

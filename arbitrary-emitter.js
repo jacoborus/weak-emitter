@@ -1,48 +1,50 @@
 'use strict'
 
 function arbitrary () {
-  const listeners = new Map()
+  const events = new Map()
+  const actions = new Map()
 
-  function setEmitters (lis, triggers) {
-    const size = triggers.size
-    if (!size) listeners.delete(lis.key)
-    else if (size === 1) {
-      let fn
-      triggers.forEach(f => { fn = f })
-      lis.launch0 = lis.launch1 = fn
-      lis.launchX = args => fn.apply(fn, args)
+  function setActions (lis, triggers) {
+    const size = triggers.length
+    if (!size) {
+      events.delete(lis.key)
+      actions.delete(lis.key)
+    } else if (size === 1) {
+      actions.set(lis.key, triggers[0])
     } else {
-      lis.launch0 = () => triggers.forEach(f => f())
-      lis.launch1 = (a, b) => triggers.forEach(f => f(a, b))
-      lis.launchX = lis.trigger
+      actions.set(lis.key, opts => {
+        for (let i = 0; i < size; i++) {
+          triggers[i](opts)
+        }
+      })
     }
   }
 
   const newListener = key => {
-    const triggers = new Set()
+    const triggers = []
 
     const lis = {
       key,
       add (fn) {
-        triggers.add(fn)
-        setEmitters(lis, triggers)
+        triggers.push(fn)
+        setActions(lis, triggers)
       },
       rm (method) {
-        triggers.delete(method)
-        setEmitters(lis, triggers)
-      },
-      trigger (args) {
-        triggers.forEach(f => f.apply(f, args))
+        let index = triggers.indexOf(method)
+        if (index > -1) {
+          triggers.splice(index, 1)
+          setActions(lis, triggers)
+        }
       }
     }
 
-    listeners.set(key, lis)
+    events.set(key, lis)
     return lis
   }
 
   return {
     on (key, method) {
-      const lis = listeners.get(key) || newListener(key)
+      const lis = events.get(key) || newListener(key)
       lis.add(method)
       let isSubscribed = true
       return () => {
@@ -54,7 +56,7 @@ function arbitrary () {
     },
 
     once (key, method) {
-      const lis = listeners.get(key) || newListener(key)
+      const lis = events.get(key) || newListener(key)
       lis.add(fn)
       function fn () {
         method(arguments)
@@ -62,37 +64,18 @@ function arbitrary () {
       }
     },
 
-    emit (key) {
-      const lis = listeners.get(key)
-      if (!lis) return
-      const al = arguments.length
-      if (al === 1) lis.launch0()
-      else if (al > 4) lis.launch1(arguments[1], arguments[2])
-      else {
-        let args = new Array(al - 1)
-        for (let i = 1; i < al; ++i) {
-          args[i - 1] = arguments[i]
-        }
-        lis.launchX(args)
-      }
+    emit (key, opts) {
+      const action = actions.get(key)
+      if (action) action(opts)
     },
 
-    trigger (key) {
-      const lis = listeners.get(key)
-      if (!lis) return
-      if (arguments.length === 1) {
-        return lis.launch0()
+    off (key, method) {
+      if (!(1 in arguments)) {
+        events.delete(key)
+        actions.delete(key)
+      } else if (events.has(key)) {
+        events.get(key).rm(method)
       }
-      let args = arguments[1]
-      if (typeof args !== 'object') {
-        throw new Error('arguments has wrong type')
-      }
-      lis.trigger(args)
-    },
-
-    off (key, action) {
-      if (!(1 in arguments)) listeners.delete(key)
-      else if (listeners.has(key)) listeners.get(key).rm(action)
     }
   }
 }
