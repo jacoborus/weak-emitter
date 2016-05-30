@@ -24,10 +24,10 @@ Install with [npm](https://www.npmjs.com/package/arbitrary-emitter), clone the r
 
 ```js
 const emitter = arbitraryEmitter()
-const obj = {}
-emitter.on(obj, () => doSomething())
+const key = {}
+emitter.on(key, () => doSomething())
 // will `doSomething`
-emitter.emit(obj)
+emitter.emit(key)
 ```
 
 ## Emitter API
@@ -35,7 +35,7 @@ emitter.emit(obj)
 <a name="emitter-on-api"></a>
 ### on(eventKey, listener)
 
-Adds the `listener` function to the end of the listeners array for the event tagged with `key`. A check is made to see if the listener has already been added so it won't be called multiple times. Event listeners are invoked in the order they are added.
+Adds the `listener` function to the end of the listeners array for the event tagged with `eventKey`. `eventKey` can be any type of value. A check is made to see if the listener has already been added so it won't be called multiple times. Event listeners are invoked in the order they are added.
 
 `on` returns removeListener method
 
@@ -51,40 +51,43 @@ emitter.emit(key) // won't do anything
 
 
 <a name="emitter-addonce-api"></a>
-### once(key, action)
+### once(eventKey, listener)
 
-Adds the listener `action` to the `Set` for the event tagged with `key`. `action` will be triggered just one time, then it will be removed.
-`key` can be any type of value
+Same as `on`, but `listener` will be triggered just one time, then it will be removed.
 
 ```js
-const obj = {}
-emitter.once(obj, () => doSomethingOnce())
-emitter.emit(obj) // will `doSomethingOnce`
-emitter.emit(obj) // won't do anything
+const key = {}
+emitter.once(key, () => doSomethingOnce())
+emitter.emit(key) // will `doSomethingOnce`
+emitter.emit(key) // won't do anything
 ```
 
 
 
 <a name="emitter-emit-api"></a>
-### emit(key[, ...args])
+### emit(eventKey[, options])
 
-Synchronously calls each of the listeners registered for the event tagged with `key`, and pass the rest of the arguments to them
+Synchronously calls each of the listeners registered for the event tagged with `eventKey`, passing the supplied argument `options` to each
 
 ```js
-emitter.on('test', (a, b) => console.log(a + b))
-emitter.emit('test', 1, 2) // => 3
+emitter.on('test', (opts) => console.log(opts.test))
+const options = { test: 'Testing!' }
+emitter.emit('test', options) // => 'Testing!'
 ```
 
 
 
 <a name="emitter-off-api"></a>
-### off(key[, action])
+### off([eventKey[, listener]])
 
-Remove `action` from listeners tagged with `key`. If no `action` is specified will remove all listeners tagged with `key`
+- When no argument is passed all the listeners and its eventKeys will be removed from the emitter
+- If an `eventKey` but no `listener` is passed all the listeners and its key will be removed
+- If `eventKey` and `listener` are passed as arguments just the listener will be removed from its group
 
 ```js
 emitter.off(key, action) // will remove action from listeners
 emitter.off(key) // will remove all the listeners tagged with `key`, and the tag itself
+emitter.off() // will remove all the listeners from all the eventKeys and the eventKeys themselves
 ```
 
 
