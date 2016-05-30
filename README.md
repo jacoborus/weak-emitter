@@ -78,18 +78,6 @@ emitter.emit('test', 1, 2) // => 3
 
 
 
-<a name="emitter-trigger-api"></a>
-### trigger(key[, args])
-
-Synchronously calls each of the listeners registered for the event tagged with `key`, and pass `args` array as arguments to them
-
-```js
-emitter.on('test', (a, b) => console.log(a + b))
-emitter.trigger('test', [1, 2]) // => 3
-```
-
-
-
 <a name="emitter-off-api"></a>
 ### off(key[, action])
 
