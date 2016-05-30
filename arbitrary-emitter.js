@@ -4,63 +4,63 @@ function arbitrary () {
   const events = new Map()
   const actions = new Map()
 
-  function setActions (lis, triggers) {
-    const size = triggers.length
+  function setActions (e, listeners) {
+    const size = listeners.length
     if (!size) {
-      events.delete(lis.key)
-      actions.delete(lis.key)
+      events.delete(e.key)
+      actions.delete(e.key)
     } else if (size === 1) {
-      actions.set(lis.key, triggers[0])
+      actions.set(e.key, listeners[0])
     } else {
-      actions.set(lis.key, opts => {
+      actions.set(e.key, opts => {
         for (let i = 0; i < size; i++) {
-          triggers[i](opts)
+          listeners[i](opts)
         }
       })
     }
   }
 
   const newListener = key => {
-    const triggers = []
+    const listeners = []
 
-    const lis = {
+    const e = {
       key,
       add (fn) {
-        triggers.push(fn)
-        setActions(lis, triggers)
+        listeners.push(fn)
+        setActions(e, listeners)
       },
-      rm (method) {
-        let index = triggers.indexOf(method)
+      rm (lis) {
+        let index = listeners.indexOf(lis)
         if (index > -1) {
-          triggers.splice(index, 1)
-          setActions(lis, triggers)
+          listeners.splice(index, 1)
+          setActions(e, listeners)
         }
       }
     }
 
-    events.set(key, lis)
-    return lis
+    events.set(key, e)
+    return e
   }
 
   return {
-    on (key, method) {
-      const lis = events.get(key) || newListener(key)
-      lis.add(method)
+    on (key, lis) {
+      const e = events.get(key) || newListener(key)
+      e.add(lis)
       let isSubscribed = true
       return () => {
         if (isSubscribed) {
-          lis.rm(method)
+          e.rm(lis)
           isSubscribed = false
         }
       }
     },
 
-    once (key, method) {
-      const lis = events.get(key) || newListener(key)
-      lis.add(fn)
+    once (key, lis) {
+      const e = events.get(key) || newListener(key)
+      e.add(fn)
       function fn () {
-        method(arguments)
-        lis.rm(fn)
+        lis(arguments)
+        e.rm(fn)
       }
     },
 
@@ -69,12 +69,12 @@ function arbitrary () {
       if (action) action(opts)
     },
 
-    off (key, method) {
+    off (key, lis) {
       if (!(1 in arguments)) {
         events.delete(key)
         actions.delete(key)
       } else if (events.has(key)) {
-        events.get(key).rm(method)
+        events.get(key).rm(lis)
       }
     }
   }
