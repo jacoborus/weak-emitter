@@ -33,20 +33,19 @@ emitter.emit(obj)
 ## Emitter API
 
 <a name="emitter-on-api"></a>
-### on(key, action)
+### on(eventKey, listener)
 
-Adds the listener `action` to the `Set` for the event tagged with `key`. 
-`key` can be any type of value.
+Adds the `listener` function to the end of the listeners array for the event tagged with `key`. A check is made to see if the listener has already been added so it won't be called multiple times. Event listeners are invoked in the order they are added.
 
-`on` returns removeListener  method
+`on` returns removeListener method
 
 ```js
-const obj = {}
-let removeListener = emitter.on(obj, () => doSomething())
-emitter.emit(obj) // will `doSomething`
-emitter.emit(obj) // will `doSomething`
+const key = {}
+let removeListener = emitter.on(key, () => doSomething())
+emitter.emit(key) // will `doSomething`
+emitter.emit(key) // will `doSomething`
 removeListener()
-emitter.emit(obj) // won't do anything
+emitter.emit(key) // won't do anything
 ```
 
 
