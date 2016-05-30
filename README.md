@@ -3,7 +3,7 @@ arbitrary-emitter
 
 Event emitter with ES6 Map sugar for modern browsers and node.js (~400 bytes). [arbitrary-emitter.jacoborus.codes](http://arbitrary-emitter.jacoborus.codes)
 
-[![Build Status](https://travis-ci.org/jacoborus/arbitrary-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/arbitrary-emitter) [![npm version](https://badge.fury.io/js/arbitrary-emitter.svg)](https://www.npmjs.com/package/arbitrary-emitter)
+[![Build Status](https://travis-ci.org/jacoborus/arbitrary-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/arbitrary-emitter) [![npm version](https://badge.fury.io/js/arbitrary-emitter.svg)](https://www.npmjs.com/package/arbitrary-emitter) ![npm dependencies](https://david-dm.org/jacoborus/arbitrary-emitter.svg)
 
 **arbitrary-emitter** stores listeners and actions in Maps, this allows to use arbitrary values as keys for your listeners.
 
