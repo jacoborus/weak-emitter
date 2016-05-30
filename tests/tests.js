@@ -7,14 +7,18 @@ test('on and emit', t => {
   const emitter = ae()
   const obj = {}
   let control = 0
-  let unsubscribe = emitter.on(obj, () => ++control)
+  const fn = () => ++control
+  let unsubscribe = emitter.on(obj, fn)
   emitter.emit(obj)
   t.is(control, 1, 'trigger')
   emitter.emit(obj)
   t.is(control, 2, 'trigger')
+  emitter.on(obj, fn)
+  emitter.emit(obj)
+  t.is(control, 3, 'trigger')
   unsubscribe()
   emitter.emit(obj)
-  t.is(control, 2, 'unsubscribe')
+  t.is(control, 3, 'unsubscribe')
   t.end()
 })
 

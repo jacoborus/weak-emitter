@@ -26,7 +26,9 @@ function arbitrary () {
     const e = {
       key,
       add (fn) {
-        listeners.push(fn)
+        if (listeners.indexOf(fn) === -1) {
+          listeners.push(fn)
+        }
         setActions(e, listeners)
       },
       rm (lis) {
