@@ -102,3 +102,25 @@ test('emit with arguments', t => {
 
   t.end()
 })
+
+test('remove listener while emitting', t => {
+  const emitter = ae()
+  const out = []
+  emitter.on('test', () => {
+    out.push(1)
+  })
+  emitter.once('test', () => {
+    out.push('a')
+  })
+  emitter.on('test', () => {
+    out.push('finish')
+  })
+  emitter.emit('test')
+  emitter.emit('test')
+  t.is(out[0], 1)
+  t.is(out[1], 'a')
+  t.is(out[2], 'finish')
+  t.is(out[3], 1)
+  t.is(out[4], 'finish')
+  t.end()
+})

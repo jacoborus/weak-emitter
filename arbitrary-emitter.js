@@ -5,7 +5,7 @@ function arbitrary () {
   const actions = new Map()
 
   function setActions (e, listeners) {
-    const size = listeners.length
+    let size = listeners.length
     if (!size) {
       events.delete(e.key)
       actions.delete(e.key)
@@ -13,8 +13,9 @@ function arbitrary () {
       actions.set(e.key, listeners[0])
     } else {
       actions.set(e.key, opts => {
-        for (let i = 0; i < size; i++) {
-          listeners[i](opts)
+        let size = listeners.length
+        while (size > 0) {
+          listeners[--size](opts)
         }
       })
     }
@@ -27,7 +28,7 @@ function arbitrary () {
       key,
       add (fn) {
         if (listeners.indexOf(fn) === -1) {
-          listeners.push(fn)
+          listeners.unshift(fn)
         }
         setActions(e, listeners)
       },
