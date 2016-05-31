@@ -1,7 +1,7 @@
 arbitrary-emitter
 =================
 
-Event emitter with ES6 Map sugar for modern browsers and node.js (~400 bytes). [arbitrary-emitter.jacoborus.codes](http://arbitrary-emitter.jacoborus.codes)
+Event emitter with ES6 Map sugar for modern browsers and node.js (~450 bytes). [arbitrary-emitter.jacoborus.codes](http://arbitrary-emitter.jacoborus.codes)
 
 [![Build Status](https://travis-ci.org/jacoborus/arbitrary-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/arbitrary-emitter) [![npm version](https://badge.fury.io/js/arbitrary-emitter.svg)](https://www.npmjs.com/package/arbitrary-emitter) ![npm dependencies](https://david-dm.org/jacoborus/arbitrary-emitter.svg)
 
@@ -13,10 +13,9 @@ It's written in vanilla ES6, so you will have to transpile it before using it in
 
 - works in browsers and node.js
 - allows to use **arbitrary values** as keys for listeners
-- really small footprint (**~400 bytes** when gzipped)
+- really small footprint (**~450 bytes** when gzipped)
 - **blazing fast**
 - conventional api (`on`, `off`, `once` and `emit`)
-- `on` method returns an unsubscription function (like in redux.js)
 
 ## Usage
 
@@ -37,15 +36,10 @@ emitter.emit(key)
 
 Adds the `listener` function to the end of the listeners array for the event tagged with `eventKey`. `eventKey` can be any type of value. A check is made to see if the listener has already been added so it won't be called multiple times. Event listeners are invoked in the order they are added.
 
-`on` returns removeListener method
-
 ```js
 const key = {}
-let removeListener = emitter.on(key, () => doSomething())
+emitter.on(key, () => doSomething())
 emitter.emit(key) // will `doSomething`
-emitter.emit(key) // will `doSomething`
-removeListener()
-emitter.emit(key) // won't do anything
 ```
 
 

@@ -137,7 +137,7 @@ test('remove listener in a event with muliple listeners', t => {
   emitter.emit('test')
   t.is(out[0], 1)
   t.is(out[1], 2)
-  console.log(out)
+  t.notOk(out[2])
   emitter.emit('test')
   t.is(out[2], 1)
   t.is(out[3], 2)
