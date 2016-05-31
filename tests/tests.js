@@ -8,7 +8,7 @@ test('on and emit', t => {
   const obj = {}
   let control = 0
   const fn = () => ++control
-  let unsubscribe = emitter.on(obj, fn)
+  emitter.on(obj, fn)
   emitter.emit(obj)
   t.is(control, 1, 'trigger')
   emitter.emit(obj)
@@ -16,9 +16,6 @@ test('on and emit', t => {
   emitter.on(obj, fn)
   emitter.emit(obj)
   t.is(control, 3, 'trigger')
-  unsubscribe()
-  emitter.emit(obj)
-  t.is(control, 3, 'unsubscribe')
   t.end()
 })
 
@@ -103,7 +100,7 @@ test('emit with arguments', t => {
   t.end()
 })
 
-test('remove listener while emitting', t => {
+test('once in a event with muliple listeners', t => {
   const emitter = ae()
   const out = []
   emitter.on('test', () => {
@@ -122,5 +119,27 @@ test('remove listener while emitting', t => {
   t.is(out[2], 'finish')
   t.is(out[3], 1)
   t.is(out[4], 'finish')
+  t.end()
+})
+
+test('remove listener in a event with muliple listeners', t => {
+  const emitter = ae()
+  const out = []
+  const f1 = () => out.push(1)
+  const f2 = () => {
+    out.push(2)
+    emitter.off('test', f3)
+  }
+  const f3 = () => out.push(3)
+  emitter.on('test', f1)
+  emitter.on('test', f2)
+  emitter.on('test', f3)
+  emitter.emit('test')
+  t.is(out[0], 1)
+  t.is(out[1], 2)
+  console.log(out)
+  emitter.emit('test')
+  t.is(out[2], 1)
+  t.is(out[3], 2)
   t.end()
 })
