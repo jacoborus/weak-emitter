@@ -143,3 +143,27 @@ test('remove listener in a event with muliple listeners', t => {
   t.is(out[3], 2)
   t.end()
 })
+
+test('get listeners', t => {
+  const emitter = ae()
+  const key = {}
+  const key2 = {}
+  let c1 = 0
+  let c2 = 0
+  const f1 = () => ++c1
+  const f2 = () => ++c2
+  emitter.on(key, f1)
+  emitter.on(key, f2)
+  emitter.on(key2, f2)
+  emitter.emit(key)
+  t.is(c1, 1)
+  t.is(c2, 1)
+  const list = emitter.listeners(key)
+  t.is(list[0], f1)
+  t.is(list[1], f2)
+  const list2 = emitter.listeners(key2)
+  t.is(list2[0], f2)
+  const other = emitter.listeners({})
+  t.is(other.length, 0)
+  t.end()
+})

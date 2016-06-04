@@ -86,6 +86,22 @@ emitter.off() // will remove all the listeners from all the eventKeys and the ev
 
 
 
+<a name="emitter-listeners-api"></a>
+### listeners(eventKey)
+
+Returns a copy of the array of listeners for the event tagged `eventKey`
+
+```js
+const key = {}
+const f1 = () => console.log('f1')
+const f2 = () => console.log('f2')
+emitter.on(key, f1)
+emitter.on(key, f2)
+emitter.listeners(key)[0] === f1 // true
+emitter.listeners(key)[1] === f2 // true
+```
+
+
 <a name="testing"></a>
 ## Testing
 

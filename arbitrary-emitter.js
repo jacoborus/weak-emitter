@@ -89,7 +89,14 @@ function arbitrary () {
       } else if (events.has(key)) {
         events.get(key).rm(lis)
       }
+    },
+
+    listeners (key) {
+      const e = events.get(key)
+      if (!e) return []
+      else return e.listeners.slice(0).reverse()
     }
+
   }
 }
 
