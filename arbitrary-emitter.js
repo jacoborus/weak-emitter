@@ -1,6 +1,6 @@
 'use strict'
 
-function arbitrary () {
+module.exports = () => {
   const events = new Map()
   const actions = new Map()
 
@@ -99,5 +99,3 @@ function arbitrary () {
 
   }
 }
-
-module.exports = arbitrary
