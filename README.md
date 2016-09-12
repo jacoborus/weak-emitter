@@ -13,7 +13,7 @@ This event emitter was designed with 4 goals in mind:
 - Be lightweight: **~450 bytes** when gzipped
 - Be fast: it's optimized for being quick even with lots of emitters
 - Be conventional: with conventional api (`on`, `off`, `once` and `emit`)
-- Be modern: it stores listeners in **ES6 maps**, so you can use any kind of value as key for the listeners (Seeusage example)
+- Be modern: it stores listeners in **ES6 maps**, so you can use any kind of value as key for the listeners (See usage example)
 
 It's written in vanilla ES6, so you will have to transpile it before using it in old browsers or node.js < v5.9
 
