@@ -1,26 +1,20 @@
 {
   "name": "arbitrary-emitter",
   "version": "0.11.1",
-  "description": "Event emitter with ES6 Map sugar for modern browsers and node.js",
+  "description": "High performance event emitter for modern browsers in ~450 bytes",
   "main": "arbitrary-emitter.js",
   "scripts": {
     "linter": "standard arbitrary-emitter.js tests/tests.js",
-    "test": "node ./tests/tests.js",
-    "build-umd": "rm -rf dist && mkdir dist && cp umd-assets/preumd.txt dist/arbitrary-emitter.umd.js && cat arbitrary-emitter.js >> dist/arbitrary-emitter.umd.js && sed -i '$d' dist/arbitrary-emitter.umd.js && cat umd-assets/postumd.txt >> dist/arbitrary-emitter.umd.js",
-    "build-tests": "mkdir tests/dist -p && browserify tests/tests.js -o tests/dist/tests.js",
-    "build": "npm run build-umd && npm run build-tests",
-    "postinstall": "npm run build-umd"
+    "test": "node ./tests/tests.js"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/jacoborus/arbitrary-emitter.git"
   },
   "keywords": [
-    "Event",
+    "event emitter",
     "map",
-    "set",
-    "emitter",
-    "event emitter"
+    "ES6"
   ],
   "author": "Jacobo Tabernero",
   "license": "MIT",
@@ -29,7 +23,6 @@
   },
   "homepage": "https://github.com/jacoborus/arbitrary-emitter",
   "devDependencies": {
-    "browserify": "^13.0.1",
     "standard": "^7.1.2",
     "tape": "^4.6.0"
   }
