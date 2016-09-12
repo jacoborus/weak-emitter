@@ -1,6 +1,6 @@
 {
   "name": "arbitrary-emitter",
-  "version": "0.11.1",
+  "version": "1.0.0",
   "description": "High performance event emitter for modern browsers in ~450 bytes",
   "main": "arbitrary-emitter.js",
   "scripts": {

@@ -11,17 +11,17 @@ module.exports = () => {
       events.delete(e.key)
       actions.delete(e.key)
     } else if (size === 1) {
-      actions.set(e.key, (a, b) => {
-        let fn = listeners[0]
-        if (fn) fn(a, b)
+      actions.set(e.key, (a, b, c) => {
+        const fn = listeners[0]
+        if (fn) fn(a, b, c)
       })
     } else {
-      actions.set(e.key, (a, b) => {
+      actions.set(e.key, (a, b, c) => {
         e.running.push(listeners)
         let size = listeners.length
         while (size > 0) {
           const fn = listeners[--size]
-          if (fn) fn(a, b)
+          if (fn) fn(a, b, c)
         }
         e.running.pop()
       })
@@ -34,9 +34,7 @@ module.exports = () => {
 
     function trash (list, lis) {
       let index = list.indexOf(lis)
-      if (index > -1) {
-        delete list[index]
-      }
+      if (index > -1) delete list[index]
     }
 
     const e = {
@@ -64,38 +62,35 @@ module.exports = () => {
 
   return {
     on (key, lis) {
-      const e = events.get(key) || newListener(key)
-      e.add(lis)
+      (events.get(key) || newListener(key)).add(lis)
     },
 
     once (key, lis) {
       const e = events.get(key) || newListener(key)
-      e.add(fn)
-      function fn () {
+      e.add(function fn () {
         lis(arguments)
         e.rm(fn)
-      }
+      })
     },
 
-    emit (key, a, b) {
+    emit (key, a, b, c) {
       const action = actions.get(key)
-      if (action) action(a, b)
+      if (action) action(a, b, c)
     },
 
     off (key, lis) {
-      if (!(1 in arguments)) {
+      if (1 in arguments) {
+        events.get(key).rm(lis)
+      } else if (events.has(key)) {
         events.delete(key)
         actions.delete(key)
-      } else if (events.has(key)) {
-        events.get(key).rm(lis)
       }
     },
 
     listeners (key) {
       const e = events.get(key)
-      if (!e) return []
-      else return e.listeners.slice(0).reverse()
+      if (e) return e.listeners.slice(0).reverse()
+      else return []
     }
-
   }
 }
