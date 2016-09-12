@@ -1,21 +1,21 @@
 arbitrary-emitter
 =================
 
-Event emitter with ES6 Map sugar for modern browsers and node.js (~450 bytes). [arbitrary-emitter.jacoborus.codes](http://arbitrary-emitter.jacoborus.codes)
+High performance event emitter for modern browsers in ~450 bytes.
 
 [![Build Status](https://travis-ci.org/jacoborus/arbitrary-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/arbitrary-emitter) [![npm version](https://badge.fury.io/js/arbitrary-emitter.svg)](https://www.npmjs.com/package/arbitrary-emitter) ![npm dependencies](https://david-dm.org/jacoborus/arbitrary-emitter.svg)
 
-**arbitrary-emitter** stores listeners and actions in Maps, this allows to use arbitrary values as keys for your listeners.
-
-It's written in vanilla ES6, so you will have to transpile it before using it in old browsers or node.js < v5.9
 
 ## Features
 
-- works in browsers and node.js
-- allows to use **arbitrary values** as keys for listeners
-- really small footprint (**~450 bytes** when gzipped)
-- **blazing fast**
-- conventional api (`on`, `off`, `once` and `emit`)
+This event emitter was designed with 4 goals in mind:
+
+- Be lightweight: **~450 bytes** when gzipped
+- Be fast: it's optimized for being quick even with lots of emitters
+- Be conventional: with conventional api (`on`, `off`, `once` and `emit`)
+- Be modern: it stores listeners in **ES6 maps**, so you can use any kind of value as key for the listeners (Seeusage example)
+
+It's written in vanilla ES6, so you will have to transpile it before using it in old browsers or node.js < v5.9
 
 ## Usage
 
@@ -30,6 +30,12 @@ emitter.emit(key)
 ```
 
 ## Emitter API
+
+- [on](#emitter-on-api)
+- [off](#emitter-off-api)
+- [once](#emitter-once-api)
+- [emit](#emitter-emit-api)
+- [listeners](#emitter-listeners-api)
 
 <a name="emitter-on-api"></a>
 ### on(eventKey, listener)
@@ -129,4 +135,4 @@ Build browser tests (`npm run build-tests`) and open `test/test.html`
 
 ---
 
-© 2016 [Jacobo Tabernero](https://github.com/jacoborus) - Released under [MIT License](https://raw.github.com/jacoborus/arbitrary-emitter/master/LICENSE)
+© 2016 [Jacobo Tabernero](http://jacoborus.codes) - Released under [MIT License](https://raw.github.com/jacoborus/arbitrary-emitter/master/LICENSE)
