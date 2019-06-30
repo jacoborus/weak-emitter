@@ -11,17 +11,17 @@ module.exports = () => {
       events.delete(e.key)
       actions.delete(e.key)
     } else if (size === 1) {
-      actions.set(e.key, (a, b, c) => {
+      actions.set(e.key, function () {
         const fn = listeners[0]
-        if (fn) fn(a, b, c)
+        if (fn) fn(...arguments)
       })
     } else {
-      actions.set(e.key, (a, b, c) => {
+      actions.set(e.key, function () {
         e.running.push(listeners)
-        let size = listeners.length
-        while (size > 0) {
-          const fn = listeners[--size]
-          if (fn) fn(a, b, c)
+        let s = size
+        while (s > 0) {
+          const fn = listeners[--s]
+          if (fn) fn(...arguments)
         }
         e.running.pop()
       })

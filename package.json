@@ -1,7 +1,7 @@
 {
   "name": "arbitrary-emitter",
-  "version": "1.0.0",
-  "description": "High performance event emitter for modern browsers in ~450 bytes",
+  "version": "1.1.0",
+  "description": "High performance event emitter in ~450 bytes",
   "main": "arbitrary-emitter.js",
   "scripts": {
     "linter": "standard arbitrary-emitter.js tests/tests.js",

@@ -126,11 +126,11 @@ test('remove listener in a event with muliple listeners', t => {
   const emitter = ae()
   const out = []
   const f1 = () => out.push(1)
+  const f3 = () => out.push(3)
   const f2 = () => {
     out.push(2)
     emitter.off('test', f3)
   }
-  const f3 = () => out.push(3)
   emitter.on('test', f1)
   emitter.on('test', f2)
   emitter.on('test', f3)
