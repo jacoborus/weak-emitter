@@ -3,7 +3,7 @@ weak-emitter
 
 ES6 WeakMap based event emitter in ~350 bytes
 
-[![Build Status](https://travis-ci.org/jacoborus/weak-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/weak-emitter) [![npm version](https://badge.fury.io/js/weak-emitter.svg)](https://www.npmjs.com/package/weak-emitter) ![npm dependencies](https://david-dm.org/jacoborus/weak-emitter.svg)
+[![Build Status](https://travis-ci.org/jacoborus/weak-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/weak-emitter) [![npm version](https://badge.fury.io/js/weak-emitter.svg)](https://www.npmjs.com/package/weak-emitter)
 
 Weak-emitter stores events in **ES6 weakmaps**, so objects are the only valid type for the event keys.
 
