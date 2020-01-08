@@ -1,15 +1,15 @@
 {
-  "name": "arbitrary-emitter",
-  "version": "2.0.1",
-  "description": "Map based event emitter in ~350 bytes",
-  "main": "src/arbitrary-emitter.js",
+  "name": "weak-emitter",
+  "version": "3.0.0",
+  "description": "ES6 WeakMap based event emitter (~350 bytes)",
+  "main": "src/weak-emitter.js",
   "scripts": {
     "linter": "eslint src/*.js",
     "test": "node ./src/tests.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/jacoborus/arbitrary-emitter.git"
+    "url": "git+ssh://git@github.com/jacoborus/weak-emitter.git"
   },
   "keywords": [
     "event emitter",
@@ -19,9 +19,9 @@
   "author": "Jacobo Tabernero",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jacoborus/arbitrary-emitter/issues"
+    "url": "https://github.com/jacoborus/weak-emitter/issues"
   },
-  "homepage": "https://github.com/jacoborus/arbitrary-emitter",
+  "homepage": "https://github.com/jacoborus/weak-emitter",
   "devDependencies": {
     "eslint": "6.8.0",
     "eslint-config-standard": "14.1.0",

@@ -1,10 +1,10 @@
 'use strict'
 
 const test = require('tape')
-const ae = require('./arbitrary-emitter.js')
+const weake = require('./weak-emitter.js')
 
 test('on and emit', t => {
-  const emitter = ae()
+  const emitter = weake()
   const obj = {}
   let control = 0
   const fn = () => ++control
@@ -20,7 +20,7 @@ test('on and emit', t => {
 })
 
 test('once', t => {
-  const emitter = ae()
+  const emitter = weake()
   const obj = {}
   let control = 0
   emitter.once(obj, () => ++control)
@@ -32,7 +32,7 @@ test('once', t => {
 })
 
 test('off listener', t => {
-  const emitter = ae()
+  const emitter = weake()
   const obj = {}
   let control = 0
   emitter.on(obj, () => ++control)
@@ -46,7 +46,7 @@ test('off listener', t => {
 })
 
 test('off action', t => {
-  const emitter = ae()
+  const emitter = weake()
   const obj = {}
   const control = {
     a: 0,
@@ -66,7 +66,7 @@ test('off action', t => {
 })
 
 test('emit actions in order', t => {
-  const emitter = ae()
+  const emitter = weake()
   const obj = {}
   let control = ''
   emitter.on(obj, () => { control = control + 'a' })
@@ -87,7 +87,7 @@ test('emit actions in order', t => {
 })
 
 test('emit with arguments', t => {
-  const emitter = ae()
+  const emitter = weake()
   const obj = {}
   const control = {
     a: 0
@@ -101,7 +101,7 @@ test('emit with arguments', t => {
 })
 
 test('once in a event with muliple listeners', t => {
-  const emitter = ae()
+  const emitter = weake()
   const out = []
   const tt = {}
   emitter.on(tt, () => {
@@ -124,7 +124,7 @@ test('once in a event with muliple listeners', t => {
 })
 
 test('remove listener in a event with muliple listeners', t => {
-  const emitter = ae()
+  const emitter = weake()
   const out = []
   const tt = {}
   const f1 = () => out.push(1)
@@ -143,29 +143,5 @@ test('remove listener in a event with muliple listeners', t => {
   emitter.emit(tt)
   t.is(out[2], 1)
   t.is(out[3], 2)
-  t.end()
-})
-
-test('get listeners', t => {
-  const emitter = ae()
-  const key = {}
-  const key2 = {}
-  let c1 = 0
-  let c2 = 0
-  const f1 = () => ++c1
-  const f2 = () => ++c2
-  emitter.on(key, f1)
-  emitter.on(key, f2)
-  emitter.on(key2, f2)
-  emitter.emit(key)
-  t.is(c1, 1)
-  t.is(c2, 1)
-  const list = emitter.listeners(key)
-  t.is(list[0], f1)
-  t.is(list[1], f2)
-  const list2 = emitter.listeners(key2)
-  t.is(list2[0], f2)
-  const other = emitter.listeners({})
-  t.is(other.length, 0)
   t.end()
 })

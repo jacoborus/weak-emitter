@@ -1,14 +1,14 @@
-arbitrary-emitter
+weak-emitter
 =================
 
-ES6 Map based event emitter in ~350 bytes
+ES6 WeakMap based event emitter in ~350 bytes
 
-[![Build Status](https://travis-ci.org/jacoborus/arbitrary-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/arbitrary-emitter) [![npm version](https://badge.fury.io/js/arbitrary-emitter.svg)](https://www.npmjs.com/package/arbitrary-emitter) ![npm dependencies](https://david-dm.org/jacoborus/arbitrary-emitter.svg)
+[![Build Status](https://travis-ci.org/jacoborus/weak-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/weak-emitter) [![npm version](https://badge.fury.io/js/weak-emitter.svg)](https://www.npmjs.com/package/weak-emitter) ![npm dependencies](https://david-dm.org/jacoborus/weak-emitter.svg)
 
-Arbitrary-emitter stores listeners in **ES6 maps**, so you can use any kind of value as key for your events
+Weak-emitter stores events in **ES6 weakmaps**, so objects are the only valid type for the event keys.
 
 ```js
-const emitter = arbitraryEmitter()
+const emitter = weakEmitter()
 const key = {}
 emitter.on(key, () => doSomething())
 // will `doSomething`
@@ -17,12 +17,12 @@ emitter.emit(key)
 
 - **~350 bytes** when gzipped
 - conventional api (`on`, `off`, `once` and `emit`)
-- check [weak-emitter](https://github.com/jacoborus/weak-emitter) for a version that uses weakmaps to store events
+- check [arbitrary-emitter](https://github.com/jacoborus/weak-emitter/tree/arbitrary-emitter) for a version that uses maps to store events
 
 
 ## Install
 
-Install with [npm](https://www.npmjs.com/package/arbitrary-emitter) or yarn, clone the repo or download and extract the [zip](https://github.com/jacoborus/arbitrary-emitter/archive/master.zip).
+Install with [npm](https://www.npmjs.com/package/weak-emitter) or yarn, clone the repo or download and extract the [zip](https://github.com/jacoborus/weak-emitter/archive/master.zip).
 Then import or insert it as script tag.
 
 
@@ -32,7 +32,6 @@ Then import or insert it as script tag.
 - [off](#emitter-off-api)
 - [once](#emitter-once-api)
 - [emit](#emitter-emit-api)
-- [listeners](#emitter-listeners-api)
 
 <a name="emitter-on-api"></a>
 ### on(key, handler)
@@ -86,23 +85,6 @@ emitter.off(key) // will remove all the listeners tagged with `key`, and the tag
 ```
 
 
-<a name="emitter-listeners-api"></a>
-### listeners(key)
-
-Create and return an array with all the handlers for the event tagged with `key`
-
-
-```js
-const f1 = () => alert('hi')
-const f2 = () => alert('ho')
-emitter.on('a', f1)
-emitter.on('a', f2)
-
-emitter.emitters()
-// ==> [f1, f2]
-```
-
-
 <a name="testing"></a>
 ## Testing
 
@@ -114,4 +96,4 @@ npm test
 
 ---
 
-© 2020 [Jacobo Tabernero](http://jacoborus.codes) - Released under [MIT License](https://raw.github.com/jacoborus/arbitrary-emitter/master/LICENSE)
+© 2020 [Jacobo Tabernero](http://jacoborus.codes) - Released under [MIT License](https://raw.github.com/jacoborus/weak-emitter/master/LICENSE)
