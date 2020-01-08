@@ -1,8 +1,8 @@
 {
   "name": "arbitrary-emitter",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Map based event emitter in ~350 bytes",
-  "main": "arbitrary-emitter.js",
+  "main": "src/arbitrary-emitter.js",
   "scripts": {
     "linter": "eslint src/*.js",
     "test": "node ./src/tests.js"
