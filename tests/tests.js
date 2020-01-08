@@ -48,7 +48,7 @@ test('off listener', t => {
 test('off action', t => {
   const emitter = ae()
   const obj = {}
-  let control = {
+  const control = {
     a: 0,
     b: 0
   }
@@ -89,7 +89,7 @@ test('emit actions in order', t => {
 test('emit with arguments', t => {
   const emitter = ae()
   const obj = {}
-  let control = {
+  const control = {
     a: 0
   }
   emitter.on(obj, a => { control.a = a })
@@ -103,17 +103,18 @@ test('emit with arguments', t => {
 test('once in a event with muliple listeners', t => {
   const emitter = ae()
   const out = []
-  emitter.on('test', () => {
+  const tt = {}
+  emitter.on(tt, () => {
     out.push(1)
   })
-  emitter.once('test', () => {
+  emitter.once(tt, () => {
     out.push('a')
   })
-  emitter.on('test', () => {
+  emitter.on(tt, () => {
     out.push('finish')
   })
-  emitter.emit('test')
-  emitter.emit('test')
+  emitter.emit(tt)
+  emitter.emit(tt)
   t.is(out[0], 1)
   t.is(out[1], 'a')
   t.is(out[2], 'finish')
@@ -125,20 +126,21 @@ test('once in a event with muliple listeners', t => {
 test('remove listener in a event with muliple listeners', t => {
   const emitter = ae()
   const out = []
+  const tt = {}
   const f1 = () => out.push(1)
   const f3 = () => out.push(3)
   const f2 = () => {
     out.push(2)
-    emitter.off('test', f3)
+    emitter.off(tt, f3)
   }
-  emitter.on('test', f1)
-  emitter.on('test', f2)
-  emitter.on('test', f3)
-  emitter.emit('test')
+  emitter.on(tt, f1)
+  emitter.on(tt, f2)
+  emitter.on(tt, f3)
+  emitter.emit(tt)
   t.is(out[0], 1)
   t.is(out[1], 2)
   t.notOk(out[2])
-  emitter.emit('test')
+  emitter.emit(tt)
   t.is(out[2], 1)
   t.is(out[3], 2)
   t.end()
