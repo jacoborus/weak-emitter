@@ -1,18 +1,11 @@
 arbitrary-emitter
 =================
 
-Map based event emitter in ~350 bytes
+ES6 Map based event emitter in ~350 bytes
 
 [![Build Status](https://travis-ci.org/jacoborus/arbitrary-emitter.svg?branch=master)](https://travis-ci.org/jacoborus/arbitrary-emitter) [![npm version](https://badge.fury.io/js/arbitrary-emitter.svg)](https://www.npmjs.com/package/arbitrary-emitter) ![npm dependencies](https://david-dm.org/jacoborus/arbitrary-emitter.svg)
 
-- it stores listeners in **ES6 maps**, so you can use any kind of value as key for the listeners (See examples)
-- **~350 bytes** when gzipped
-- conventional api (`on`, `off`, `once` and `emit`)
-
-
-## Usage
-
-Install with [npm](https://www.npmjs.com/package/arbitrary-emitter), clone the repo or download and extract the [zip](https://github.com/jacoborus/arbitrary-emitter/archive/master.zip). Then import or insert it as script tag.
+Arbitrary-emitter stores listeners in **ES6 maps**, so you can use any kind of value as key for your events
 
 ```js
 const emitter = arbitraryEmitter()
@@ -22,12 +15,24 @@ emitter.on(key, () => doSomething())
 emitter.emit(key)
 ```
 
+- **~350 bytes** when gzipped
+- conventional api (`on`, `off`, `once` and `emit`)
+- check [weak-emitter](https://github.com/jacoborus/weak-emitter) for a version that uses weakmaps to store events
+
+
+## Install
+
+Install with [npm](https://www.npmjs.com/package/arbitrary-emitter) or yarn, clone the repo or download and extract the [zip](https://github.com/jacoborus/arbitrary-emitter/archive/master.zip).
+Then import or insert it as script tag.
+
+
 ## Emitter API
 
 - [on](#emitter-on-api)
 - [off](#emitter-off-api)
 - [once](#emitter-once-api)
 - [emit](#emitter-emit-api)
+- [listeners](#emitter-listeners-api)
 
 <a name="emitter-on-api"></a>
 ### on(key, handler)
