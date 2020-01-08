@@ -4,8 +4,8 @@
   "description": "Map based event emitter in ~350 bytes",
   "main": "arbitrary-emitter.js",
   "scripts": {
-    "linter": "eslint arbitrary-emitter.js tests/tests.js",
-    "test": "node ./tests/tests.js"
+    "linter": "eslint src/*.js",
+    "test": "node ./src/tests.js"
   },
   "repository": {
     "type": "git",
