@@ -5,5 +5,6 @@ export declare function weakEmitter(): {
     emit(key: object, ...args: any[]): void;
     clear(key: object): void;
     off(key: object, handler: Handler): void;
+    transfer(origin: object, destination: object): void;
 };
 export {};

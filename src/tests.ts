@@ -143,3 +143,27 @@ test('remove listener in a event with muliple listeners', t => {
   t.is(out[3], 2)
   t.end()
 })
+
+test('transfer', t => {
+  const emitter = weakEmitter()
+  const origin = {}
+  const destination = {}
+  let control = 0
+  const handler = () => ++control
+  emitter.on(origin, handler)
+  emitter.emit(origin)
+  t.is(control, 1, 'trigger')
+  emitter.emit(origin)
+  t.is(control, 2, 'trigger')
+  emitter.on(origin, handler)
+  emitter.emit(origin)
+  t.is(control, 3, 'trigger')
+  emitter.transfer(origin, destination)
+  emitter.emit(origin)
+  emitter.emit(origin)
+  t.is(control, 3, 'trigger')
+  emitter.emit(destination)
+  emitter.emit(destination)
+  t.is(control, 5, 'trigger')
+  t.end()
+})

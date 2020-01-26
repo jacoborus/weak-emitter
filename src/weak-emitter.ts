@@ -32,7 +32,18 @@ export function weakEmitter () {
 
     off (key: object, handler: Handler) {
       const handlers = events.get(key)
-      handlers && handlers.delete(handler)
+      if (!handlers) return
+      handlers.delete(handler)
+    },
+
+    transfer (origin: object, destination: object) {
+      const handlers = events.get(origin)
+      if (!handlers) return
+      const event = (events.get(destination) || newEvent(destination))
+      handlers.forEach((handler: Handler) => {
+        event.set(handler, handler)
+      })
+      events.delete(origin)
     }
   }
 }

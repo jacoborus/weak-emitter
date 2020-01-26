@@ -92,6 +92,18 @@ emitter.off(key)
 ```
 
 
+<a name="emitter-transfer-api"></a>
+### transfer(originKey, destinationKey)
+
+Transfer all the handlers from an event to another one
+
+```js
+const origin = {}
+const destination = {}
+emitter.transfer(origin, destination)
+```
+
+
 <a name="testing"></a>
 ## Testing
 
