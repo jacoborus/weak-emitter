@@ -38,7 +38,7 @@ Then import or insert it as script tag.
 <a name="emitter-on-api"></a>
 ### on(key, handler)
 
-Adds the `handler` function to the event tagged with `key`. `key` can be any type of value. Every handler will be added once, despite the number of times it was added to the event. Handlers are invoked in the order they were added.
+Adds the `handler` function to the event tagged with `key`. `key` has to be an object. Every handler will be added once, despite the number of times it was added to the event. Handlers are invoked in the order they were added.
 
 ```js
 const key = {}
@@ -50,7 +50,7 @@ emitter.emit(key) // will `doSomething`
 <a name="emitter-once-api"></a>
 ### once(key, handler)
 
-Same as `on`, but `listener` will be triggered just once, then it will be removed.
+Same as `on`, but `handler` will be triggered just once, then it will be removed.
 
 ```js
 const key = {}
