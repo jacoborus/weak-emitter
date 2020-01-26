@@ -8,15 +8,15 @@ ES6 WeakMap based event emitter in ~350 bytes
 Weak-emitter stores events in **ES6 weakmaps**, so objects are the only valid type for the event keys.
 
 ```js
+import { weakEmitter } from 'weak-emitter'
 const emitter = weakEmitter()
-const key = {}
-emitter.on(key, () => doSomething())
-// will `doSomething`
-emitter.emit(key)
+const test = {}
+emitter.on(test, (...args) => console.log(args))
+emitter.emit(test, 1, 2, 3)
+// => [1, 2, 3]
 ```
 
 - **~350 bytes** when gzipped
-- conventional api (`on`, `off`, `once` and `emit`)
 - check [arbitrary-emitter](https://github.com/jacoborus/weak-emitter/tree/arbitrary-emitter) for a version that uses maps to store events
 
 
@@ -29,9 +29,11 @@ Then import or insert it as script tag.
 ## Emitter API
 
 - [on](#emitter-on-api)
-- [off](#emitter-off-api)
 - [once](#emitter-once-api)
 - [emit](#emitter-emit-api)
+- [off](#emitter-off-api)
+- [clear](#emitter-clear-api)
+
 
 <a name="emitter-on-api"></a>
 ### on(key, handler)
@@ -43,7 +45,6 @@ const key = {}
 emitter.on(key, () => doSomething())
 emitter.emit(key) // will `doSomething`
 ```
-
 
 
 <a name="emitter-once-api"></a>
@@ -59,29 +60,35 @@ emitter.emit(key) // won't do anything
 ```
 
 
-
 <a name="emitter-emit-api"></a>
 ### emit(key[, ...args])
 
 Invoke all handlers tagged with `key`, passing the rest of the arguments
 
 ```js
-emitter.on('test', (opts) => console.log(opts.test))
-const options = { test: 'Testing!' }
-emitter.emit('test', options) // => 'Testing!'
+const test = {}
+emitter.on(test, (...args) => console.log(args))
+emitter.emit(test, 1, 2, 3) // => [1, 2, 3]
 ```
 
 
-
 <a name="emitter-off-api"></a>
-### off([key[, handler]])
+### off(key, handler)
 
-- If a `key` but no `handler` is passed the event will be removed
-- If `key` and `handler` are passed as arguments just the handler will be removed from the event
+Removes `handler` from the event tagged with `key`
 
 ```js
-emitter.off(key, action) // will remove action from listeners
-emitter.off(key) // will remove all the listeners tagged with `key`, and the tag itself
+emitter.off(key, action)
+```
+
+
+<a name="emitter-clear-api"></a>
+### clear(key)
+
+Removes the event and all its handlers
+
+```js
+emitter.off(key)
 ```
 
 

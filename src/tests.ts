@@ -1,10 +1,8 @@
-'use strict'
-
-const test = require('tape')
-const weake = require('./weak-emitter.js')
+import test from 'tape'
+import { weakEmitter } from './weak-emitter'
 
 test('on and emit', t => {
-  const emitter = weake()
+  const emitter = weakEmitter()
   const obj = {}
   let control = 0
   const fn = () => ++control
@@ -20,7 +18,7 @@ test('on and emit', t => {
 })
 
 test('once', t => {
-  const emitter = weake()
+  const emitter = weakEmitter()
   const obj = {}
   let control = 0
   emitter.once(obj, () => ++control)
@@ -31,22 +29,22 @@ test('once', t => {
   t.end()
 })
 
-test('off listener', t => {
-  const emitter = weake()
+test('clear listener', t => {
+  const emitter = weakEmitter()
   const obj = {}
   let control = 0
   emitter.on(obj, () => ++control)
   emitter.on(obj, () => ++control)
   emitter.emit(obj)
   t.is(control, 2, 'control')
-  emitter.off(obj)
+  emitter.clear(obj)
   emitter.emit(obj)
   t.is(control, 2, 'remove link from subscriptions')
   t.end()
 })
 
 test('off action', t => {
-  const emitter = weake()
+  const emitter = weakEmitter()
   const obj = {}
   const control = {
     a: 0,
@@ -66,7 +64,7 @@ test('off action', t => {
 })
 
 test('emit actions in order', t => {
-  const emitter = weake()
+  const emitter = weakEmitter()
   const obj = {}
   let control = ''
   emitter.on(obj, () => { control = control + 'a' })
@@ -87,7 +85,7 @@ test('emit actions in order', t => {
 })
 
 test('emit with arguments', t => {
-  const emitter = weake()
+  const emitter = weakEmitter()
   const obj = {}
   const control = {
     a: 0
@@ -101,11 +99,11 @@ test('emit with arguments', t => {
 })
 
 test('once in a event with muliple listeners', t => {
-  const emitter = weake()
-  const out = []
+  const emitter = weakEmitter()
+  const out: string[] = []
   const tt = {}
   emitter.on(tt, () => {
-    out.push(1)
+    out.push('uno')
   })
   emitter.once(tt, () => {
     out.push('a')
@@ -115,17 +113,17 @@ test('once in a event with muliple listeners', t => {
   })
   emitter.emit(tt)
   emitter.emit(tt)
-  t.is(out[0], 1)
+  t.is(out[0], 'uno')
   t.is(out[1], 'a')
   t.is(out[2], 'finish')
-  t.is(out[3], 1)
+  t.is(out[3], 'uno')
   t.is(out[4], 'finish')
   t.end()
 })
 
 test('remove listener in a event with muliple listeners', t => {
-  const emitter = weake()
-  const out = []
+  const emitter = weakEmitter()
+  const out: number[] = []
   const tt = {}
   const f1 = () => out.push(1)
   const f3 = () => out.push(3)
