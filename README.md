@@ -33,6 +33,7 @@ Then import or insert it as script tag.
 - [emit](#emitter-emit-api)
 - [off](#emitter-off-api)
 - [clear](#emitter-clear-api)
+- [transfer](#emitter-transfer-api)
 
 
 <a name="emitter-on-api"></a>
