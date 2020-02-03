@@ -1,9 +1,9 @@
 {
   "name": "weak-emitter",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "ES6 WeakMap based event emitter (~350 bytes)",
-  "main": "lib/weak-emitter.js",
-  "types": "lib/weak-emitter.d.ts",
+  "main": "./lib/weak-emitter.js",
+  "types": "./lib/weak-emitter.d.ts",
   "scripts": {
     "linter": "eslint src/*.js",
     "test": "tape -r ts-node/register/transpile-only src/tests.ts",

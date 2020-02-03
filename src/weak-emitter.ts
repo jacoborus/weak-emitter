@@ -17,7 +17,7 @@ export function weakEmitter () {
       const handlers = events.get(key) || newEvent(key)
       handlers.set(handler, function () {
         handlers.delete(handler)
-        handler(arguments)
+        handler(...arguments)
       })
     },
 
