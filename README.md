@@ -89,7 +89,7 @@ emitter.off(key, action)
 Removes the event and all its handlers
 
 ```js
-emitter.off(key)
+emitter.clear(key)
 ```
 
 
