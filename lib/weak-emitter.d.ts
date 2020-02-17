@@ -1,10 +1,8 @@
 declare type Handler = (...args: any[]) => void;
+declare type EventKey = string | object;
 export declare function weakEmitter(): {
-    on(key: object, handler: Handler): void;
-    once(key: object, handler: Handler): void;
-    emit(key: object, ...args: any[]): void;
-    clear(key: object): void;
-    off(key: object, handler: Handler): void;
-    transfer(origin: object, destination: object): void;
+    on: (context: object, key: EventKey, handler: Handler) => void;
+    off: (context: object, key: EventKey, handler: Handler) => void;
+    emit: (context: object, key: EventKey, ...args: any[]) => void;
 };
 export {};
