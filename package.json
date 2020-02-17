@@ -5,7 +5,7 @@
   "main": "lib/weak-emitter.js",
   "types": "lib/weak-emitter.d.ts",
   "scripts": {
-    "linter": "eslint src/*.js",
+    "linter": "eslint 'src/*.ts'",
     "test": "tape -r ts-node/register/transpile-only src/tests.ts",
     "prepublish": "rm -rf lib && tsc",
     "build": "rm -rf lib && tsc"
