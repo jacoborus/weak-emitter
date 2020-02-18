@@ -37,6 +37,40 @@ test('off action', t => {
   t.end()
 })
 
+test('eventController#off', t => {
+  const ee = weakEmitter()
+  const obj = {}
+  const event = ee.on(obj, 'a', () => { t.fail() })
+  event.off()
+  ee.emit(obj, 'a')
+  t.pass()
+  t.end()
+})
+
+test('eventController#transfer', t => {
+  t.plan(1)
+  const ee = weakEmitter()
+  const pass = () => t.pass()
+  const fail = () => t.fail()
+  const control = {
+    action: pass
+  }
+  const obj = {}
+  const dest = {}
+  const event = ee.on(obj, 'a', () => { control.action() })
+
+  event.transfer(dest)
+  ee.emit(dest, 'a')
+
+  control.action = fail
+  ee.emit(obj, 'a')
+
+  event.off()
+  ee.emit(dest, 'a')
+
+  t.end()
+})
+
 test('emit actions in order', t => {
   const emitter = weakEmitter()
   const obj = {}
