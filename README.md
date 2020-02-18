@@ -40,10 +40,19 @@ npm i weak-emitter --save
 Create new event with `eventKey` in `context` that will trigger the `handler`.
 Every handler will be added once, despite the number of times it was added to the event. Handlers are invoked in the order they were added.
 
+Returns an event controller that has two methods:
+- off(): remove event
+- tranfer(destination): moves the event to `destination` context
+
 ```js
 const context = {}
 const eventKey = 'propName'
-emitter.on(context, eventKey, (...args) => doSomething(args))
+const evController = emitter.on(context, eventKey, (...args) => doSomething(args))
+
+const ctx2 = {}
+evController.transfer(ctx2)
+evController.off()
+
 ```
 
 
