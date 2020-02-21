@@ -3,3 +3,4 @@ dist
 npm-debug.log
 .lvimrc
 .tern-port
+lib
