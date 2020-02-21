@@ -32,7 +32,7 @@ npm i weak-emitter --save
 
 - `context: object`
 - `eventKey: string | object`
-- `handler: (...args: []) => void)`
+- `handler: (...args: []) => void`
 
 <a name="emitter-on-api"></a>
 ### on(context, eventKey, handler)
