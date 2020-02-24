@@ -1,11 +1,12 @@
 type EventHandler = (...args: any[]) => void
-type EventKey = string | object
+type EventKey = PropertyKey | object
 type EventStack = Set<EventHandler>
 type EventContext = Map<EventKey, EventStack>
 type Contexts = WeakMap<object, EventContext>
 
 export interface EventController {
-  off: EventHandler
+  emit: EventHandler
+  off: () => void
   transfer: (context: object) => void
 }
 
@@ -29,6 +30,7 @@ export function weakEmitter () {
     let stack = eventContext.get(key) || newStack(eventContext, key)
     stack.add(handler)
     return {
+      emit: handler,
       off () { off(context, key, handler) },
       transfer (destination: object) {
         stack.delete(handler)

@@ -1,6 +1,6 @@
 {
   "name": "weak-emitter",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "description": "Contexts based event emitter on ES6 WeakMaps",
   "main": "lib/weak-emitter.js",
   "types": "lib/weak-emitter.d.ts",

@@ -37,6 +37,17 @@ test('off action', t => {
   t.end()
 })
 
+test('eventController#emit', t => {
+  const ee = weakEmitter()
+  const obj = {}
+  t.plan(1)
+  const event = ee.on(obj, 'a', (...change) => {
+    t.same(change, [1, 2, 3, 4])
+  })
+  event.emit(1, 2, 3, 4)
+  t.end()
+})
+
 test('eventController#off', t => {
   const ee = weakEmitter()
   const obj = {}
