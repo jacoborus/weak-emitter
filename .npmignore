@@ -1,9 +1,0 @@
-node_modules
-dist
-npm-debug.log
-.lvimrc
-.tern-port
-src
-.eslintrc
-.travis.yml
-tsconfig.json
